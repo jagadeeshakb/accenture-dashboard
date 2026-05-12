@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accenture Solution Governance Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark"><span>Ac</span></div>
+    <div class="logo-text">
+      <div class="logo-title">Accenture</div>
+      <div class="logo-sub">Solution Governance</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <button class="nav-item active" onclick="switchTab('deal')" data-tab="deal">
+      <i class="ti ti-shield-check"></i>
+      <span>Deal Governance</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('req')" data-tab="req">
+      <i class="ti ti-sitemap"></i>
+      <span>Requirements Mapping</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('timeline')" data-tab="timeline">
+      <i class="ti ti-calendar-stats"></i>
+      <span>Timeline & FTEs</span>
+    </button>
+    <button class="nav-item" onclick="switchTab('deliverables')" data-tab="deliverables">
+      <i class="ti ti-clipboard-check"></i>
+      <span>Deliverables</span>
+    </button>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="status-pill"><span class="status-dot"></span>Framework Active</div>
+    <div class="version-tag">v1.0 · 2025</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="topbar">
+    <div class="topbar-breadcrumb">
+      <span id="breadcrumb-label">Deal Governance</span>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-tag"><i class="ti ti-building"></i> Accenture Internal</span>
+      <span class="topbar-tag accent"><i class="ti ti-route"></i> DSP Enabled</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- DEAL GOVERNANCE -->
+    <div class="panel active" id="panel-deal">
+
+      <div class="panel-intro">
+        <h1 class="panel-title">Deal size tiers & approval workflow</h1>
+        <p class="panel-desc">All deals are routed through DSP. Approval requirements escalate based on deal size per Accenture governance policy.</p>
+      </div>
+
+      <div class="tier-grid">
+
+        <div class="tier-card t1">
+          <div class="tier-stripe"></div>
+          <div class="tier-inner">
+            <div class="tier-top">
+              <div class="tier-badge green">Tier 1</div>
+              <div class="tier-dsp"><i class="ti ti-route"></i> DSP only</div>
+            </div>
+            <div class="tier-amount">&lt; $5M</div>
+            <div class="tier-label">Small deal</div>
+            <div class="tier-divider"></div>
+            <div class="approvals">
+              <div class="appr-row">
+                <div class="appr-icon no"><i class="ti ti-x"></i></div>
+                <span class="appr-name">DCSO / QA review</span>
+                <span class="appr-tag not-req">Not required</span>
+              </div>
+              <div class="appr-row">
+                <div class="appr-icon no"><i class="ti ti-x"></i></div>
+                <span class="appr-name">Solution lead sign-off</span>
+                <span class="appr-tag not-req">Not required</span>
+              </div>
+              <div class="appr-row">
+                <div class="appr-icon yes"><i class="ti ti-check"></i></div>
+                <span class="appr-name">DSP routing</span>
+                <span class="appr-tag required">Required</span>
+              </div>
+            </div>
+            <div class="tier-note"><i class="ti ti-info-circle"></i> Expedited path — DSP submission only</div>
+          </div>
+        </div>
+
+        <div class="tier-card t2">
+          <div class="tier-stripe"></div>
+          <div class="tier-inner">
+            <div class="tier-top">
+              <div class="tier-badge amber">Tier 2</div>
+              <div class="tier-dsp"><i class="ti ti-route"></i> DSP + approvals</div>
+            </div>
+            <div class="tier-amount">$5M – $10M</div>
+            <div class="tier-label">Mid deal</div>
+            <div class="tier-divider"></div>
+            <div class="approvals">
+              <div class="appr-row">
+                <div class="appr-icon yes"><i class="ti ti-check"></i></div>
+                <span class="appr-name">DCSO / QA review</span>
+                <span class="appr-tag required">Required</span>
+              </div>
+              <div class="appr-row">
+                <div class="appr-icon yes"><i class="ti ti-check"></i></div>
+                <span class="appr-name">Solution lead sign-off</span>
+                <span class="appr-tag required">Required</span>
+              </div>
+              <div class="appr-row">
+                <div class="appr-icon yes"><i class="ti ti-check"></i></div>
+                <span class="appr-name">DSP routing</span>
+                <span class="appr-tag required">Required</span>
+              </div>
+            </div>
+            <div class="tier-note"><i class="ti ti-info-circle"></i> DCSO + Solution Lead via DSP</div>
+          </div>
+        </div>
+
+        <div class="tier-card t3">
+          <div class="tier-stripe"></div>
+          <div class="tier-inner">
+            <div class="tier-top">
+              <div class="tier-badge purple">Tier 3</div>
+              <div class="tier-dsp"><i class="ti ti-route"></i> Full governance</div>
+            </div>
+            <div class="tier-amount">&gt; $10M</div>
+            <div class="tier-label">Large deal</div>
+            <div class="tier-divider"></div>
+            <div class="approvals">
+              <div class="appr-row">
+                <div class="appr-icon yes"><i class="ti ti-check"></i></div>
+                <span class="appr-name">DCSO / QA review</span>
+                <span class="appr-tag mandatory">Mandatory</span>
+              </div>
+              <div class="appr-row">
+                <div class="appr-icon yes"><i class="ti ti-check"></i></div>
+                <span class="appr-name">Solution lead sign-off</span>
+                <span class="appr-tag mandatory">Mandatory</span>
+              </div>
+              <div class="appr-row">
+                <div class="appr-icon yes"><i class="ti ti-check"></i></div>
+                <span class="appr-name">All governance board</span>
+                <span class="appr-tag mandatory">Mandatory</span>
+              </div>
+              <div class="appr-row">
+                <div class="appr-icon yes"><i class="ti ti-check"></i></div>
+                <span class="appr-name">DSP routing</span>
+                <span class="appr-tag mandatory">Mandatory</span>
+              </div>
+            </div>
+            <div class="tier-note"><i class="ti ti-info-circle"></i> Full board review via DSP required</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="section-label">DSP approval flow</div>
+      <div class="flow-card">
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-icon purple"><i class="ti ti-file-description"></i></div>
+            <div class="flow-step-label">Deal intake</div>
+            <div class="flow-step-sub">Submission</div>
+          </div>
+          <div class="flow-arrow"><i class="ti ti-arrow-right"></i></div>
+          <div class="flow-step">
+            <div class="flow-icon amber"><i class="ti ti-filter"></i></div>
+            <div class="flow-step-label">Tier assessment</div>
+            <div class="flow-step-sub">Deal size check</div>
+          </div>
+          <div class="flow-arrow"><i class="ti ti-arrow-right"></i></div>
+          <div class="flow-step">
+            <div class="flow-icon blue"><i class="ti ti-users"></i></div>
+            <div class="flow-step-label">Approval routing</div>
+            <div class="flow-step-sub">DCSO / QA / SL</div>
+          </div>
+          <div class="flow-arrow"><i class="ti ti-arrow-right"></i></div>
+          <div class="flow-step">
+            <div class="flow-icon teal"><i class="ti ti-circle-check"></i></div>
+            <div class="flow-step-label">Sign-off</div>
+            <div class="flow-step-sub">DSP confirmation</div>
+          </div>
+          <div class="flow-arrow"><i class="ti ti-arrow-right"></i></div>
+          <div class="flow-step">
+            <div class="flow-icon green"><i class="ti ti-rocket"></i></div>
+            <div class="flow-step-label">Deal activation</div>
+            <div class="flow-step-sub">Mobilisation begins</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- REQUIREMENTS MAPPING -->
+    <div class="panel" id="panel-req">
+      <div class="panel-intro">
+        <h1 class="panel-title">Requirement-to-team mapping</h1>
+        <p class="panel-desc">Each solution workstream maps to dedicated Accenture specialist teams responsible for delivery and sign-off.</p>
+      </div>
+      <div class="req-grid" id="req-grid"></div>
+    </div>
+
+    <!-- TIMELINE & FTEs -->
+    <div class="panel" id="panel-timeline">
+      <div class="panel-intro">
+        <h1 class="panel-title">Timeline & FTE requirements</h1>
+        <p class="panel-desc">20-week delivery programme across four phases. Click any phase to expand activity details.</p>
+      </div>
+
+      <div class="fte-summary">
+        <div class="fte-card">
+          <div class="fte-label">Total FTEs</div>
+          <div class="fte-value">24</div>
+          <div class="fte-unit">full-time equivalents</div>
+        </div>
+        <div class="fte-card">
+          <div class="fte-label">Programme duration</div>
+          <div class="fte-value">20</div>
+          <div class="fte-unit">weeks end-to-end</div>
+        </div>
+        <div class="fte-card">
+          <div class="fte-label">Peak mobilisation</div>
+          <div class="fte-value" style="font-size:1.5rem;">Wk 3–6</div>
+          <div class="fte-unit">max resource demand</div>
+        </div>
+        <div class="fte-card">
+          <div class="fte-label">Environments</div>
+          <div class="fte-value" style="font-size:1.25rem;">Dev·UAT·Prod</div>
+          <div class="fte-unit">standard secured approach</div>
+        </div>
+      </div>
+
+      <div class="section-label">Phases & activities</div>
+      <div id="phases-container"></div>
+
+      <div class="section-label" style="margin-top:2rem;">Indicative gantt overview</div>
+      <div class="gantt-card">
+        <div class="gantt-header">
+          <div class="gantt-label-col">Phase</div>
+          <div class="gantt-fte-col">FTEs</div>
+          <div class="gantt-bar-col">
+            <div class="gantt-weeks">
+              <span>Wk 1</span><span>Wk 5</span><span>Wk 10</span><span>Wk 15</span><span>Wk 20</span>
+            </div>
+          </div>
+        </div>
+        <div id="gantt-rows"></div>
+      </div>
+    </div>
+
+    <!-- DELIVERABLES -->
+    <div class="panel" id="panel-deliverables">
+      <div class="panel-intro">
+        <h1 class="panel-title">Key deliverables</h1>
+        <p class="panel-desc">All formal artefacts required for landing zone delivery, client sign-off, and operational handover.</p>
+      </div>
+      <div class="deliv-grid" id="deliv-grid"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
