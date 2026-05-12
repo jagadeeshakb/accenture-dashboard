@@ -4,385 +4,1137 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Accenture · Solution Governance Hub</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23A100FF'/><text x='6' y='23' font-size='18' font-family='sans-serif' font-weight='700' fill='white'>Ac</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css">
-<link rel="stylesheet" href="styles/base.css">
-<link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/components.css">
-<link rel="stylesheet" href="styles/agents.css">
-<link rel="stylesheet" href="styles/integrations.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ac:#A100FF;--ac-d:#7900C8;--ac-l:#C850FF;
+  --ink-900:#0D0C0B;--ink-800:#1A1917;--ink-700:#2E2D2A;--ink-600:#444340;--ink-500:#5E5D59;
+  --ink-400:#7A7975;--ink-300:#9A9994;--ink-200:#C4C3BD;--ink-100:#E2E1DB;--ink-50:#F4F3EE;
+  --g600:#166534;--g400:#16a34a;--g100:#dcfce7;--g50:#f0fdf4;
+  --a600:#92400e;--a400:#d97706;--a100:#fef3c7;--a50:#fffbeb;
+  --r600:#991b1b;--r400:#dc2626;--r100:#fee2e2;--r50:#fef2f2;
+  --b600:#1e40af;--b400:#2563eb;--b100:#dbeafe;--b50:#eff6ff;
+  --t600:#0f766e;--t400:#14b8a6;--t100:#ccfbf1;--t50:#f0fdfa;
+  --bg:#F0EFE9;--surface:#fff;--raised:#F9F8F4;
+  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
+  --rsm:6px;--rmd:10px;--rlg:14px;--rxl:20px;
+  --sh1:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);
+  --sh2:0 4px 16px rgba(0,0,0,.09),0 2px 6px rgba(0,0,0,.05);
+  --sh3:0 12px 40px rgba(0,0,0,.13),0 4px 10px rgba(0,0,0,.07);
+  --sw:248px;--th:58px;
+}
+html,body{height:100%;font-family:var(--fb);font-size:14px;line-height:1.6;color:var(--ink-800);background:var(--bg);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--fd);line-height:1.2}
+button{cursor:pointer;font-family:var(--fb)}
+input,select,textarea{font-family:var(--fb)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--ink-200);border-radius:3px}
+
+/* ── LAYOUT ── */
+body{display:flex;min-height:100vh;overflow:hidden}
+.sidebar{width:var(--sw);flex-shrink:0;background:var(--ink-900);display:flex;flex-direction:column;height:100vh;position:fixed;left:0;top:0;z-index:200;transition:transform .2s}
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.content{flex:1;overflow-y:auto;padding:1.75rem 2rem}
+
+/* ── SIDEBAR ── */
+.sb-brand{display:flex;align-items:center;gap:11px;padding:1.25rem 1.125rem 1rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-mark{width:36px;height:36px;background:var(--ac);border-radius:var(--rmd);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-mark svg{width:20px;height:20px}
+.sb-title{font-family:var(--fd);font-size:15px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.sb-sub{font-size:10.5px;color:rgba(255,255,255,.38);margin-top:1px}
+.sb-role{padding:.875rem 1.125rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-role-label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.3);margin-bottom:5px}
+.role-sel{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:var(--rmd);color:rgba(255,255,255,.85);font-size:13px;font-family:var(--fb);padding:7px 10px;outline:none}
+.role-sel option{background:#1a1917}
+.sb-nav{flex:1;padding:1rem .75rem;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+.nav-sec{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.25);padding:4px 10px;margin-top:.75rem}
+.nav-btn{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rmd);border:none;background:none;color:rgba(255,255,255,.5);font-size:13.5px;width:100%;text-align:left;transition:all .15s;position:relative}
+.nav-btn i{font-size:17px;flex-shrink:0}
+.nav-btn span:first-of-type{flex:1}
+.nav-btn:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
+.nav-btn.active{background:rgba(161,0,255,.22);color:#fff;border:1px solid rgba(161,0,255,.35)}
+.nav-btn.active i{color:var(--ac-l)}
+.nav-pip{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;background:rgba(22,163,74,.25);color:#86efac}
+.nav-pip.pur{background:rgba(161,0,255,.3);color:var(--ac-l)}
+.sb-foot{padding:1rem 1.125rem;border-top:1px solid rgba(255,255,255,.07)}
+.conn{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.cdot{width:7px;height:7px;border-radius:50%;background:var(--g400);animation:pulse 2.5s infinite}
+.cdot.warn{background:var(--a400)}
+.cdot.off{background:var(--r400);animation:none}
+.ctext{font-size:12px;color:rgba(255,255,255,.4)}
+.sb-ver{font-size:10.5px;color:rgba(255,255,255,.18);font-family:var(--fm)}
+
+/* ── TOPBAR ── */
+.topbar{height:var(--th);background:var(--surface);border-bottom:1px solid var(--ink-100);display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;gap:12px;flex-shrink:0;position:relative;z-index:100}
+.tb-left{display:flex;align-items:center;gap:12px}
+.tb-right{display:flex;align-items:center;gap:8px}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px}
+.bc-root{color:var(--ink-400)}
+.bc-sep{font-size:12px;color:var(--ink-300)}
+.bc-cur{color:var(--ink-700);font-weight:500}
+.deal-pill{display:flex;align-items:center;gap:6px;background:var(--raised);border:1px solid var(--ink-100);border-radius:20px;padding:5px 12px;font-size:12.5px;color:var(--ink-500)}
+.deal-pill i{font-size:14px}
+.pill-action{background:var(--ac);color:#fff;border:none;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:500;font-family:var(--fb);margin-left:4px;cursor:pointer;transition:background .15s}
+.pill-action:hover{background:var(--ac-d)}
+.icon-btn{width:36px;height:36px;border-radius:var(--rmd);border:1px solid var(--ink-200);background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--ink-500);font-size:18px;transition:all .15s;position:relative;cursor:pointer}
+.icon-btn:hover{background:var(--ink-50);color:var(--ink-700)}
+.nbadge{position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:var(--r400);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--surface)}
+
+/* ── VIEWS ── */
+.view{display:none;animation:fadeUp .22s ease}
+.view.active{display:block}
+.view-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.75rem;gap:16px;flex-wrap:wrap}
+.view-title{font-size:1.65rem;font-weight:700;color:var(--ink-900);letter-spacing:-.5px}
+.view-sub{font-size:13.5px;color:var(--ink-400);margin-top:4px;line-height:1.5}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-400);margin-bottom:.875rem;margin-top:1.5rem}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--rmd);font-size:13.5px;font-weight:500;font-family:var(--fb);border:none;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-pri{background:var(--ac);color:#fff}.btn-pri:hover{background:var(--ac-d)}
+.btn-sec{background:var(--surface);color:var(--ink-700);border:1px solid var(--ink-200)}.btn-sec:hover{background:var(--ink-50)}
+.btn-ghost{background:none;color:var(--ink-500);border:1px dashed var(--ink-200)}.btn-ghost:hover{background:var(--ink-50);color:var(--ink-700)}
+.btn-sm{padding:7px 14px;font-size:12.5px}
+.btn-lg{padding:12px 24px;font-size:15px}
+
+/* ── CARDS / FORM ── */
+.card{background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);padding:1.25rem;box-shadow:var(--sh1)}
+.card-hd{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-400);margin-bottom:1rem}
+.form-label{display:block;font-size:11.5px;font-weight:600;color:var(--ink-500);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
+.form-input{width:100%;padding:9px 12px;border-radius:var(--rmd);border:1px solid var(--ink-200);background:var(--surface);font-size:13.5px;color:var(--ink-800);font-family:var(--fb);outline:none;transition:border-color .15s,box-shadow .15s}
+.form-input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(161,0,255,.12)}
+.form-input::placeholder{color:var(--ink-300)}
+.fg{display:flex;flex-direction:column}
+.ipre{position:relative}.ipre .form-input{padding-left:22px}
+.ipre-sym{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--ink-400);pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.bg-green{background:var(--g100);color:var(--g600)}
+.bg-amber{background:var(--a100);color:var(--a600)}
+.bg-red{background:var(--r100);color:var(--r600)}
+.bg-blue{background:var(--b100);color:var(--b600)}
+.bg-purple{background:rgba(161,0,255,.1);color:var(--ac-d)}
+.bg-gray{background:var(--ink-50);color:var(--ink-600)}
+
+/* ── HOME ── */
+.hero{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:16px}
+.hero-title{font-size:2rem;font-weight:800;color:var(--ink-900);letter-spacing:-.8px}
+.hero-accent{color:var(--ac)}
+.hero-sub{font-size:14px;color:var(--ink-400);margin-top:4px}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem}
+.stat-card{background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);padding:1.125rem 1.25rem;box-shadow:var(--sh1);transition:box-shadow .2s}
+.stat-card:hover{box-shadow:var(--sh2)}
+.stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-400);font-weight:600;margin-bottom:6px}
+.stat-val{font-size:2rem;font-weight:700;font-family:var(--fd);color:var(--ink-900);line-height:1.1}
+.stat-sub{font-size:12px;color:var(--ink-400);margin-top:4px}
+.stat-up{color:var(--g400)}.stat-dn{color:var(--r400)}
+.home-grid{display:grid;grid-template-columns:1fr 300px;gap:1.5rem}
+.step-list{display:flex;flex-direction:column}
+.step{display:flex;gap:14px;position:relative}
+.step:not(:last-child)::after{content:'';position:absolute;left:15px;top:34px;width:1px;height:calc(100% - 18px);background:var(--ink-100)}
+.step-dot{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid;position:relative;z-index:1}
+.s-done{background:var(--g100);border-color:var(--g400);color:var(--g600)}
+.s-active{background:rgba(161,0,255,.1);border-color:var(--ac);color:var(--ac)}
+.s-todo{background:var(--ink-50);border-color:var(--ink-200);color:var(--ink-300)}
+.step-body{flex:1;padding-bottom:1.25rem}
+.step-title{font-size:13.5px;font-weight:500;color:var(--ink-800);margin-top:4px}
+.step-sub{font-size:12px;color:var(--ink-400);margin-top:2px}
+.qa-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--rmd);background:var(--surface);border:1px solid var(--ink-100);color:var(--ink-700);font-size:13px;font-family:var(--fb);transition:all .15s;text-align:left;width:100%;margin-bottom:8px;cursor:pointer}
+.qa-btn:hover{background:var(--ink-50);border-color:var(--ink-200)}
+.qa-btn i.lead{font-size:18px;color:var(--ac);flex-shrink:0}
+.qa-text{flex:1}.qa-title{font-size:13px;font-weight:500}.qa-sub{font-size:11.5px;color:var(--ink-400)}
+.int-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rmd);background:var(--surface);border:1px solid var(--ink-100);margin-bottom:8px}
+.int-icon{width:32px;height:32px;border-radius:var(--rsm);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.int-name{font-size:13px;font-weight:500;flex:1}
+.int-tag{font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:20px;background:var(--a100);color:var(--a600)}
+.int-tag.live{background:var(--g100);color:var(--g600)}
+
+/* ── DEAL GOVERNANCE ── */
+.deal-form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:1.25rem}
+.tier-result{margin-top:1.25rem;padding:1rem 1.25rem;border-radius:var(--rlg);border:2px solid;display:none;align-items:center;gap:12px}
+.tier-result.show{display:flex}
+.tr-t1{background:var(--g50);border-color:var(--g400)}
+.tr-t2{background:var(--a50);border-color:var(--a400)}
+.tr-t3{background:rgba(161,0,255,.05);border-color:var(--ac)}
+.tr-body{flex:1}
+.tr-title{font-size:15px;font-weight:600}
+.tr-sub{font-size:13px;margin-top:2px;color:var(--ink-500)}
+.tier-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:1.5rem}
+.tc{background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);overflow:hidden;box-shadow:var(--sh1);transition:all .2s}
+.tc.hi{border-color:var(--ac);box-shadow:0 0 0 3px rgba(161,0,255,.15),var(--sh2)}
+.tc-stripe{height:4px}
+.ts1{background:var(--g400)}.ts2{background:var(--a400)}.ts3{background:var(--ac)}
+.tc-body{padding:1.25rem}
+.tc-tier{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-400);margin-bottom:4px}
+.tc-amt{font-size:1.8rem;font-weight:700;font-family:var(--fd);letter-spacing:-1px}
+.tc-name{font-size:12.5px;color:var(--ink-400);margin-bottom:1rem}
+.tc-div{height:1px;background:var(--ink-100);margin-bottom:1rem}
+.tc-appr{display:flex;flex-direction:column;gap:8px}
+.appr-row{display:flex;align-items:center;gap:8px;font-size:12.5px}
+.appr-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.ad-yes{background:var(--g100);color:var(--g600)}
+.ad-no{background:var(--ink-100);color:var(--ink-400)}
+.appr-name{flex:1;color:var(--ink-700)}
+.appr-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px}
+.at-req{background:rgba(161,0,255,.1);color:var(--ac-d)}
+.at-no{background:var(--ink-50);color:var(--ink-500)}
+.at-mand{background:var(--r100);color:var(--r600)}
+.flow-wrap{background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);padding:1.5rem;box-shadow:var(--sh1)}
+.flow-steps{display:flex;align-items:center;overflow-x:auto;padding-bottom:4px}
+.flow-step{text-align:center;min-width:100px;flex-shrink:0}
+.flow-icon{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:19px;border:2px solid}
+.fi-pur{background:rgba(161,0,255,.08);border-color:rgba(161,0,255,.3);color:var(--ac)}
+.fi-amb{background:var(--a50);border-color:var(--a100);color:var(--a400)}
+.fi-blu{background:var(--b50);border-color:var(--b100);color:var(--b600)}
+.fi-tea{background:var(--t50);border-color:var(--t100);color:var(--t600)}
+.fi-grn{background:var(--g50);border-color:var(--g100);color:var(--g600)}
+.flow-step-name{font-size:11.5px;font-weight:500}
+.flow-step-sub{font-size:10.5px;color:var(--ink-400)}
+.flow-arr{flex:1;height:2px;background:var(--ink-100);min-width:20px}
+.appr-track{display:flex;align-items:center;overflow-x:auto;padding-bottom:8px;margin-bottom:1.25rem}
+.appr-step{text-align:center;min-width:95px;flex-shrink:0}
+.as-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:18px;border:2px solid}
+.asi-done{background:var(--g100);border-color:var(--g400);color:var(--g600)}
+.asi-pend{background:rgba(161,0,255,.08);border-color:var(--ac);color:var(--ac)}
+.asi-wait{background:var(--ink-50);border-color:var(--ink-200);color:var(--ink-300)}
+.as-name{font-size:11.5px;font-weight:500}
+.as-sub{font-size:10.5px;color:var(--ink-400)}
+.as-conn{flex:1;height:1.5px;background:var(--ink-100);min-width:16px}
+
+/* ── ADM ESTIMATOR ── */
+.est-layout{display:grid;grid-template-columns:1fr 320px;gap:1.25rem}
+.param-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
+.role-tbl-hd{display:grid;grid-template-columns:1fr 64px 64px 80px 34px;gap:8px;padding:0 0 8px;border-bottom:1px solid var(--ink-100);margin-bottom:4px}
+.rth{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-400)}
+.role-row{display:grid;grid-template-columns:1fr 64px 64px 80px 34px;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--ink-50)}
+.role-row:last-child{border-bottom:none}
+.rc-inp{width:100%;padding:6px 8px;border-radius:var(--rsm);border:1px solid var(--ink-200);font-size:12.5px;font-family:var(--fb);color:var(--ink-800);outline:none}
+.rc-inp:focus{border-color:var(--ac)}
+.rc-del{width:30px;height:30px;border-radius:var(--rsm);border:1px solid var(--ink-200);background:none;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--ink-400);cursor:pointer;transition:all .15s}
+.rc-del:hover{background:var(--r50);border-color:var(--r400);color:var(--r600)}
+.est-total{font-size:2.5rem;font-weight:800;font-family:var(--fd);color:var(--ink-900);letter-spacing:-1.5px}
+.est-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-400);margin-bottom:4px}
+.est-brkdown{margin-top:1rem;display:flex;flex-direction:column;gap:8px}
+.est-row{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.est-rl{color:var(--ink-500)}
+.est-rv{font-weight:500;color:var(--ink-800);font-family:var(--fm)}
+.ph-bars{display:flex;flex-direction:column;gap:10px}
+.ph-bar-row{display:flex;align-items:center;gap:10px}
+.ph-bar-lbl{font-size:12px;color:var(--ink-600);min-width:100px}
+.ph-bar-track{flex:1;height:8px;background:var(--ink-100);border-radius:4px;overflow:hidden}
+.ph-bar-fill{height:100%;border-radius:4px;transition:width .6s ease}
+.ph-bar-val{font-size:11.5px;font-family:var(--fm);color:var(--ink-500);min-width:56px;text-align:right}
+.exp-btns{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ── myISP ── */
+.isp-layout{display:grid;grid-template-columns:320px 1fr;gap:1.25rem}
+.isp-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.isp-tbl th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-400);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--ink-100)}
+.isp-tbl td{padding:10px 10px;border-bottom:1px solid var(--ink-50);vertical-align:middle}
+.isp-tbl tr:hover td{background:var(--ink-50)}
+.isp-tbl tr:last-child td{border-bottom:none}
+.mob-bars{display:flex;align-items:flex-end;gap:3px;height:80px}
+.mob-bar{flex:1;background:var(--ac);border-radius:2px 2px 0 0;transition:opacity .15s;cursor:pointer}
+
+/* ── TIMELINE ── */
+.env-strip{display:flex;gap:1.5rem;background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);padding:1rem 1.5rem;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center}
+.env-lane{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-600)}
+.env-dot{width:10px;height:10px;border-radius:50%}
+.ed-dev{background:var(--t400)}.ed-uat{background:var(--b400)}.ed-pro{background:var(--ac)}
+.env-wk{font-size:11.5px;font-family:var(--fm);color:var(--ink-400);margin-left:4px}
+.phase-block{background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);overflow:hidden;margin-bottom:10px;box-shadow:var(--sh1)}
+.ph-hdr{display:flex;align-items:center;gap:12px;padding:1rem 1.25rem;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:var(--fb);transition:background .15s}
+.ph-hdr:hover{background:var(--ink-50)}
+.ph-ico{width:34px;height:34px;border-radius:var(--rmd);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ph-inf{flex:1}
+.ph-name{font-size:14px;font-weight:500;color:var(--ink-800)}
+.ph-sub{font-size:12px;color:var(--ink-400)}
+.ph-wk{font-family:var(--fm);font-size:12px;color:var(--ink-500);margin-right:6px}
+.ph-chev{font-size:16px;color:var(--ink-400);transition:transform .2s}
+.ph-chev.open{transform:rotate(180deg)}
+.ph-body{display:none;border-top:1px solid var(--ink-100)}
+.ph-body.open{display:block}
+.act-row{display:flex;align-items:center;gap:10px;padding:10px 1.25rem;border-bottom:1px solid var(--ink-50)}
+.act-row:last-child{border-bottom:none}
+.act-num{width:22px;height:22px;border-radius:50%;background:var(--ink-50);font-size:11px;font-weight:500;font-family:var(--fm);display:flex;align-items:center;justify-content:center;color:var(--ink-400);flex-shrink:0}
+.act-name{font-size:13px;flex:1}
+.act-fte{font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;background:rgba(161,0,255,.08);color:var(--ac-d)}
+.act-dur{font-size:11.5px;font-family:var(--fm);color:var(--ink-400);min-width:55px;text-align:right}
+.gantt-wrap{background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);overflow:hidden;box-shadow:var(--sh1)}
+.gantt-hd{display:grid;grid-template-columns:180px 60px 1fr;padding:10px 1.25rem;background:var(--ink-50);border-bottom:1px solid var(--ink-100);gap:12px}
+.gantt-hc{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-400)}
+.gantt-wks{display:flex;justify-content:space-between}
+.gantt-wk{font-size:10px;font-family:var(--fm);color:var(--ink-400)}
+.gantt-row{display:grid;grid-template-columns:180px 60px 1fr;padding:10px 1.25rem;border-bottom:1px solid var(--ink-50);gap:12px;align-items:center;transition:background .15s}
+.gantt-row:last-child{border-bottom:none}
+.gantt-row:hover{background:var(--ink-50)}
+.gantt-lbl{font-size:12.5px;color:var(--ink-700)}
+.gantt-fte{font-size:12px;font-family:var(--fm);color:var(--ink-500)}
+.gantt-bg{height:22px;background:var(--ink-100);border-radius:4px;position:relative;overflow:hidden}
+.gantt-fill{position:absolute;top:0;height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:10.5px;font-weight:600;color:rgba(255,255,255,.9);white-space:nowrap;overflow:hidden}
+
+/* ── DELIVERABLES ── */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap}
+.fb{padding:6px 14px;border-radius:20px;border:1px solid var(--ink-200);background:var(--surface);color:var(--ink-500);font-size:12.5px;font-family:var(--fb);cursor:pointer;transition:all .15s}
+.fb:hover{border-color:var(--ink-300);background:var(--ink-50)}
+.fb.active{background:var(--ac);border-color:var(--ac);color:#fff}
+.deliv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.deliv-card{background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);padding:1.125rem 1.25rem;box-shadow:var(--sh1);cursor:pointer;transition:all .2s;display:flex;gap:14px}
+.deliv-card:hover{box-shadow:var(--sh2);border-color:var(--ac)}
+.deliv-ico{width:40px;height:40px;border-radius:var(--rmd);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.deliv-body{flex:1}
+.deliv-name{font-size:14px;font-weight:500;color:var(--ink-800);margin-bottom:2px}
+.deliv-owner{font-size:12px;color:var(--ink-400);margin-bottom:10px}
+.deliv-footer{display:flex;justify-content:space-between;align-items:center}
+.deliv-phase{font-size:11.5px;font-family:var(--fm);color:var(--ink-400)}
+.deliv-st{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.dst-ip{background:var(--a100);color:var(--a600)}
+.dst-pe{background:var(--ink-100);color:var(--ink-500)}
+.dst-co{background:var(--g100);color:var(--g600)}
+
+/* ── DSP ── */
+.dsp-card{background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);padding:1.25rem;box-shadow:var(--sh1);display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
+.dsp-left{flex:1}
+.dsp-deal-name{font-size:14px;font-weight:500}
+.dsp-meta{font-size:12px;color:var(--ink-400);margin-top:2px}
+.dsp-prog-track{height:4px;background:var(--ink-100);border-radius:2px;overflow:hidden;margin-top:10px}
+.dsp-prog-fill{height:100%;border-radius:2px;background:var(--ac);transition:width .8s ease}
+.dsp-prog-lbl{font-size:11px;color:var(--ink-400);margin-top:4px;display:flex;justify-content:space-between}
+.reviewers{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.rev-chip{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--ink-50);border-radius:var(--rmd);border:1px solid var(--ink-100)}
+.rev-av{width:24px;height:24px;border-radius:50%;background:rgba(161,0,255,.12);color:var(--ac-d);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600}
+.rev-name{font-size:12px;font-weight:500}
+.rev-role{font-size:10.5px;color:var(--ink-400)}
+.rev-st{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:20px}
+.rst-app{background:var(--g100);color:var(--g600)}
+.rst-pen{background:var(--a100);color:var(--a600)}
+.rst-req{background:rgba(161,0,255,.1);color:var(--ac-d)}
+.dsp-actions{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+
+/* ── AGENTS ── */
+.agents-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:1.5rem}
+.agent-card{background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rxl);overflow:hidden;box-shadow:var(--sh1);transition:all .2s;display:flex;flex-direction:column}
+.agent-card:hover{box-shadow:var(--sh2);transform:translateY(-2px)}
+.agent-top{padding:1.25rem 1.25rem 1rem}
+.agent-hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:.875rem}
+.agent-av{width:44px;height:44px;border-radius:var(--rlg);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;position:relative}
+.agent-sdot{position:absolute;bottom:-2px;right:-2px;width:12px;height:12px;border-radius:50%;border:2px solid var(--surface)}
+.sd-ready{background:var(--g400)}.sd-run{background:var(--a400);animation:pulse .8s infinite}.sd-idle{background:var(--ink-300)}
+.agent-name{font-size:14px;font-weight:600;color:var(--ink-900);font-family:var(--fd)}
+.agent-role{font-size:11.5px;color:var(--ink-400);margin-top:2px}
+.agent-desc{font-size:12.5px;color:var(--ink-500);line-height:1.5;margin-bottom:.875rem}
+.agent-caps{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem}
+.agent-cap{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-600)}
+.agent-cap i{font-size:14px;color:var(--ac);flex-shrink:0}
+.agent-foot{padding:.875rem 1.25rem;border-top:1px solid var(--ink-100);background:var(--ink-50);display:flex;align-items:center;gap:8px}
+.agent-run{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 14px;border-radius:var(--rmd);background:var(--ac);color:#fff;border:none;font-size:13px;font-weight:500;font-family:var(--fb);cursor:pointer;transition:all .15s}
+.agent-run:hover{background:var(--ac-d)}
+.agent-run.running{background:var(--a400)}
+.agent-cfg{width:30px;height:30px;border-radius:var(--rmd);border:1px solid var(--ink-200);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--ink-400);cursor:pointer;transition:all .15s}
+.agent-cfg:hover{background:var(--ink-100);color:var(--ink-700)}
+.console{background:var(--ink-900);border-radius:var(--rxl);overflow:hidden;min-height:180px;max-height:280px;display:flex;flex-direction:column}
+.console-hd{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12.5px;font-weight:600;color:rgba(255,255,255,.7);font-family:var(--fm)}
+.console-hd i{color:var(--ac-l)}
+.console-clr{margin-left:auto;font-size:11px;background:none;border:none;color:rgba(255,255,255,.3);font-family:var(--fm);cursor:pointer}
+.console-clr:hover{color:rgba(255,255,255,.6)}
+.console-body{flex:1;overflow-y:auto;padding:10px 16px;display:flex;flex-direction:column;gap:4px}
+.log-line{display:flex;gap:10px;font-family:var(--fm);font-size:12px;line-height:1.5;animation:fadeUp .15s ease}
+.log-time{color:rgba(255,255,255,.22);flex-shrink:0}
+.log-agent{flex-shrink:0;font-weight:500}
+.log-msg{color:rgba(255,255,255,.7)}
+.ll-info .log-agent{color:#60a5fa}
+.ll-success .log-agent{color:#4ade80}
+.ll-warning .log-agent{color:#fbbf24}
+.ll-error .log-agent{color:#f87171}
+
+/* ── REPORT ── */
+.report-section{margin-bottom:2rem}
+.report-title{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--ink-800);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid var(--ac)}
+.report-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:1rem}
+.report-table th{text-align:left;padding:10px 12px;background:var(--ink-900);color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.report-table td{padding:10px 12px;border-bottom:1px solid var(--ink-100);vertical-align:middle}
+.report-table tr:nth-child(even) td{background:var(--raised)}
+.report-table tr:hover td{background:rgba(161,0,255,.04)}
+.report-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.5rem}
+.rk-card{background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);padding:1rem;text-align:center}
+.rk-val{font-size:1.75rem;font-weight:700;font-family:var(--fd);color:var(--ac)}
+.rk-label{font-size:12px;color:var(--ink-500);margin-top:4px}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(13,12,11,.55);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--rxl);width:min(90vw,560px);box-shadow:var(--sh3);animation:fadeUp .2s ease;max-height:85vh;overflow:hidden;display:flex;flex-direction:column}
+.modal-hd{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border-bottom:1px solid var(--ink-100);font-size:15px;font-weight:600}
+.modal-x{width:28px;height:28px;border-radius:var(--rsm);border:none;background:var(--ink-50);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--ink-500);cursor:pointer}
+.modal-x:hover{background:var(--ink-100)}
+.modal-body{padding:1.5rem;overflow-y:auto;flex:1}
+.modal-foot{padding:1rem 1.5rem;border-top:1px solid var(--ink-100);display:flex;justify-content:flex-end;gap:8px}
+
+/* ── TOAST ── */
+.toast-wrap{position:fixed;bottom:1.5rem;right:1.5rem;display:flex;flex-direction:column;gap:8px;z-index:1000;pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:var(--rlg);background:var(--ink-900);color:#fff;font-size:13.5px;box-shadow:var(--sh3);animation:slideIn .2s ease;pointer-events:all;max-width:320px}
+.toast i{font-size:18px;flex-shrink:0}
+.toast.success i{color:var(--g400)}.toast.error i{color:var(--r400)}.toast.warning i{color:var(--a400)}.toast.info i{color:#60a5fa}
+
+/* ── NOTIF PANEL ── */
+.notif-panel{position:absolute;top:var(--th);right:1rem;width:300px;background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--rlg);box-shadow:var(--sh3);z-index:300;display:none;overflow:hidden}
+.notif-panel.open{display:block;animation:slideIn .2s ease}
+.notif-hd{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--ink-100);font-size:13px;font-weight:600}
+.notif-clr{font-size:12px;color:var(--ac);background:none;border:none;cursor:pointer}
+.notif-item{padding:12px 16px;border-bottom:1px solid var(--ink-50);display:flex;gap:10px}
+.ni-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ni-title{font-size:13px;font-weight:500}
+.ni-sub{font-size:12px;color:var(--ink-400);margin-top:2px}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .home-grid{grid-template-columns:1fr}
+  .est-layout{grid-template-columns:1fr}
+  .isp-layout{grid-template-columns:1fr}
+  .agents-grid{grid-template-columns:repeat(2,1fr)}
+  .deal-form-grid{grid-template-columns:repeat(2,1fr)}
+  .tier-grid3{grid-template-columns:1fr}
+}
+@media(max-width:800px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .menu-btn{display:flex!important}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .deliv-grid{grid-template-columns:1fr}
+  .report-kpi{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .deal-form-grid{grid-template-columns:1fr}
+  .agents-grid{grid-template-columns:1fr}
+}
+.menu-btn{display:none;width:34px;height:34px;border-radius:var(--rmd);border:1px solid var(--ink-200);background:none;color:var(--ink-500);font-size:18px;align-items:center;justify-content:center;cursor:pointer}
+</style>
 </head>
 <body>
 
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
-  <div class="sidebar-top">
-    <div class="sidebar-brand">
-      <div class="brand-mark">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2L20 19H2L11 2Z" fill="white" opacity="0.9"/></svg>
-      </div>
-      <div>
-        <div class="brand-name">Accenture</div>
-        <div class="brand-sub">Solution Governance Hub</div>
-      </div>
+  <div class="sb-brand">
+    <div class="sb-mark">
+      <svg viewBox="0 0 22 22" fill="none"><path d="M11 2L20 19H2L11 2Z" fill="white" opacity=".9"/></svg>
     </div>
-
-    <div class="role-selector">
-      <div class="role-label">Viewing as</div>
-      <select class="role-select" id="roleSelect" onchange="App.setRole(this.value)">
-        <option value="deal_owner">Deal Owner</option>
-        <option value="solution_lead">Solution Lead</option>
-        <option value="resource_manager">Resource Manager</option>
-        <option value="dcso">DCSO / QA</option>
-        <option value="delivery_manager">Delivery Manager</option>
-      </select>
+    <div>
+      <div class="sb-title">Accenture</div>
+      <div class="sb-sub">Solution Governance Hub</div>
     </div>
   </div>
 
-  <nav class="sidebar-nav">
-    <div class="nav-section-label">Workspace</div>
-    <button class="nav-btn active" data-view="home" onclick="App.navigate('home')">
-      <i class="ti ti-home-2"></i><span>Command centre</span>
-    </button>
-    <button class="nav-btn" data-view="deal" onclick="App.navigate('deal')">
-      <i class="ti ti-shield-check"></i><span>Deal governance</span>
-    </button>
-    <button class="nav-btn" data-view="estimator" onclick="App.navigate('estimator')">
-      <i class="ti ti-calculator"></i><span>ADM estimator</span>
-    </button>
-    <button class="nav-btn" data-view="resources" onclick="App.navigate('resources')">
-      <i class="ti ti-users"></i><span>myISP resources</span>
-    </button>
-    <button class="nav-btn" data-view="timeline" onclick="App.navigate('timeline')">
-      <i class="ti ti-calendar-stats"></i><span>Timeline & phases</span>
-    </button>
-    <button class="nav-btn" data-view="deliverables" onclick="App.navigate('deliverables')">
-      <i class="ti ti-clipboard-list"></i><span>Deliverables</span>
-    </button>
+  <div class="sb-role">
+    <div class="sb-role-label">Viewing as</div>
+    <select class="role-sel" id="roleSelect" onchange="setRole(this.value)">
+      <option value="deal_owner">Deal Owner</option>
+      <option value="solution_lead">Solution Lead</option>
+      <option value="resource_manager">Resource Manager</option>
+      <option value="dcso">DCSO / QA</option>
+      <option value="delivery_manager">Delivery Manager</option>
+    </select>
+  </div>
 
-    <div class="nav-section-label" style="margin-top:1.5rem;">Integrations</div>
-    <button class="nav-btn" data-view="dsp" onclick="App.navigate('dsp')">
-      <i class="ti ti-route"></i><span>DSP portal</span>
-      <span class="nav-badge">Live</span>
-    </button>
-    <button class="nav-btn" data-view="agents" onclick="App.navigate('agents')">
-      <i class="ti ti-robot"></i><span>AI agents</span>
-      <span class="nav-badge purple">AI</span>
-    </button>
+  <nav class="sb-nav">
+    <div class="nav-sec">Workspace</div>
+    <button class="nav-btn active" data-v="home" onclick="nav('home')"><i class="ti ti-home-2"></i><span>Command centre</span></button>
+    <button class="nav-btn" data-v="deal" onclick="nav('deal')"><i class="ti ti-shield-check"></i><span>Deal governance</span></button>
+    <button class="nav-btn" data-v="estimator" onclick="nav('estimator')"><i class="ti ti-calculator"></i><span>ADM estimator</span></button>
+    <button class="nav-btn" data-v="resources" onclick="nav('resources')"><i class="ti ti-users"></i><span>myISP resources</span></button>
+    <button class="nav-btn" data-v="timeline" onclick="nav('timeline')"><i class="ti ti-calendar-stats"></i><span>Timeline & phases</span></button>
+    <button class="nav-btn" data-v="deliverables" onclick="nav('deliverables')"><i class="ti ti-clipboard-list"></i><span>Deliverables</span></button>
+    <div class="nav-sec">Integrations</div>
+    <button class="nav-btn" data-v="dsp" onclick="nav('dsp')"><i class="ti ti-route"></i><span>DSP portal</span><span class="nav-pip">Live</span></button>
+    <button class="nav-btn" data-v="agents" onclick="nav('agents')"><i class="ti ti-robot"></i><span>AI agents</span><span class="nav-pip pur">AI</span></button>
+    <button class="nav-btn" data-v="report" onclick="nav('report')"><i class="ti ti-file-analytics"></i><span>Reports</span><span class="nav-pip" style="background:rgba(14,165,233,.25);color:#7dd3fc;">New</span></button>
   </nav>
 
-  <div class="sidebar-footer">
-    <div class="conn-status">
-      <span class="conn-dot" id="connDot"></span>
-      <span class="conn-text" id="connText">Connecting...</span>
-    </div>
-    <div class="sidebar-version">SGH v2.0 · May 2025</div>
+  <div class="sb-foot">
+    <div class="conn"><span class="cdot warn" id="cdot"></span><span class="ctext" id="ctext">Connecting...</span></div>
+    <div class="sb-ver">SGH v2.0 · May 2025</div>
   </div>
 </aside>
 
 <!-- MAIN -->
-<div class="main" id="main">
-
-  <!-- TOPBAR -->
+<div class="main">
   <header class="topbar">
-    <div class="topbar-left">
-      <button class="menu-toggle" onclick="App.toggleSidebar()" aria-label="Toggle menu">
-        <i class="ti ti-menu-2"></i>
-      </button>
-      <div class="breadcrumb">
-        <span class="bc-root">SGH</span>
-        <i class="ti ti-chevron-right bc-sep"></i>
-        <span class="bc-current" id="bcCurrent">Command centre</span>
-      </div>
+    <div class="tb-left">
+      <button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')"><i class="ti ti-menu-2"></i></button>
+      <div class="breadcrumb"><span class="bc-root">SGH</span><i class="ti ti-chevron-right bc-sep"></i><span class="bc-cur" id="bcCur">Command centre</span></div>
     </div>
-    <div class="topbar-right">
-      <div class="deal-context-pill" id="dealContextPill">
-        <i class="ti ti-briefcase"></i>
-        <span id="dealContextLabel">No active deal</span>
-        <button class="pill-btn" onclick="App.navigate('deal')">Set deal</button>
+    <div class="tb-right">
+      <div class="deal-pill"><i class="ti ti-briefcase"></i><span id="dealCtx">No active deal</span><button class="pill-action" onclick="nav('deal')">Set deal</button></div>
+      <div style="position:relative;">
+        <button class="icon-btn" onclick="toggleNotif()" title="Notifications"><i class="ti ti-bell"></i><span class="nbadge" id="nbadge">3</span></button>
+        <div class="notif-panel" id="notifPanel">
+          <div class="notif-hd"><span>Notifications</span><button class="notif-clr" onclick="clearNotif()">Clear all</button></div>
+          <div class="notif-item"><div class="ni-icon" style="background:rgba(161,0,255,.1);"><i class="ti ti-route" style="color:var(--ac);font-size:16px;"></i></div><div><div class="ni-title">DSP submission ready</div><div class="ni-sub">Deal pack generated — awaiting submission</div></div></div>
+          <div class="notif-item"><div class="ni-icon" style="background:var(--g50);"><i class="ti ti-users" style="color:var(--g600);font-size:16px;"></i></div><div><div class="ni-title">myISP request pending</div><div class="ni-sub">6 FTE resource request needs review · 15m ago</div></div></div>
+          <div class="notif-item"><div class="ni-icon" style="background:var(--a50);"><i class="ti ti-alert-triangle" style="color:var(--a400);font-size:16px;"></i></div><div><div class="ni-title">Approval overdue</div><div class="ni-sub">DCSO review overdue by 2 days</div></div></div>
+        </div>
       </div>
-      <button class="icon-btn" onclick="App.toggleNotifications()" aria-label="Notifications">
-        <i class="ti ti-bell"></i>
-        <span class="notif-badge" id="notifBadge">3</span>
-      </button>
+      <button class="icon-btn" onclick="nav('report')" title="Generate report"><i class="ti ti-file-analytics"></i></button>
     </div>
   </header>
 
-  <!-- NOTIFICATIONS PANEL -->
-  <div class="notif-panel" id="notifPanel">
-    <div class="notif-header">
-      <span>Notifications</span>
-      <button onclick="App.clearNotifications()" class="notif-clear">Clear all</button>
-    </div>
-    <div id="notifList"></div>
-  </div>
+  <div class="content">
 
-  <!-- VIEWS -->
-  <main class="content" id="contentArea">
-
-    <!-- HOME / COMMAND CENTRE -->
+    <!-- ── HOME ── -->
     <div class="view active" id="view-home">
-      <div class="view-hero">
-        <div class="hero-text">
-          <h1 class="hero-title">Good morning, <span class="hero-accent" id="roleName">Deal Owner</span></h1>
-          <p class="hero-sub">Your deal governance hub. Start a new deal or pick up where you left off.</p>
-        </div>
-        <button class="btn-primary btn-lg" onclick="App.startNewDeal()">
-          <i class="ti ti-plus"></i> Start new deal
-        </button>
+      <div class="hero">
+        <div><h1 class="hero-title">Good morning, <span class="hero-accent" id="roleName">Deal Owner</span></h1><p class="hero-sub">Your deal governance hub. Start a new deal or pick up where you left off.</p></div>
+        <button class="btn btn-pri btn-lg" onclick="nav('deal')"><i class="ti ti-plus"></i> Start new deal</button>
       </div>
-
       <div class="stat-row" id="statRow"></div>
-
       <div class="home-grid">
-        <div class="home-main">
-          <div class="section-hd">Active workflow</div>
-          <div class="workflow-stepper" id="workflowStepper"></div>
+        <div>
+          <div class="sec-label" style="margin-top:0;">Active workflow</div>
+          <div class="step-list" id="stepList"></div>
         </div>
-        <div class="home-side">
-          <div class="section-hd">Quick actions</div>
-          <div class="quick-actions" id="quickActions"></div>
+        <div>
+          <div class="sec-label" style="margin-top:0;">Quick actions</div>
+          <button class="qa-btn" onclick="nav('deal')"><i class="ti ti-plus lead"></i><div class="qa-text"><div class="qa-title">New deal</div><div class="qa-sub">Start deal governance workflow</div></div><i class="ti ti-chevron-right" style="color:var(--ink-300);"></i></button>
+          <button class="qa-btn" onclick="nav('estimator')"><i class="ti ti-calculator lead"></i><div class="qa-text"><div class="qa-title">Run ADM estimate</div><div class="qa-sub">Calculate effort and cost</div></div><i class="ti ti-chevron-right" style="color:var(--ink-300);"></i></button>
+          <button class="qa-btn" onclick="nav('resources')"><i class="ti ti-users lead"></i><div class="qa-text"><div class="qa-title">Raise resource request</div><div class="qa-sub">Generate myISP FTE plan</div></div><i class="ti ti-chevron-right" style="color:var(--ink-300);"></i></button>
+          <button class="qa-btn" onclick="nav('report')"><i class="ti ti-file-analytics lead"></i><div class="qa-text"><div class="qa-title">Generate report</div><div class="qa-sub">Full governance summary</div></div><i class="ti ti-chevron-right" style="color:var(--ink-300);"></i></button>
+          <button class="qa-btn" onclick="runAllAgents()"><i class="ti ti-robot lead"></i><div class="qa-text"><div class="qa-title">Run all AI agents</div><div class="qa-sub">Automate full governance cycle</div></div><i class="ti ti-chevron-right" style="color:var(--ink-300);"></i></button>
 
-          <div class="section-hd" style="margin-top:1.5rem;">System integrations</div>
-          <div class="integration-status-list" id="integrationStatus"></div>
+          <div class="sec-label">System integrations</div>
+          <div class="int-row"><div class="int-icon" style="background:rgba(161,0,255,.1);"><i class="ti ti-route" style="color:var(--ac);"></i></div><div class="int-name">Deal Structuring Platform</div><span class="int-tag">Sandbox</span></div>
+          <div class="int-row"><div class="int-icon" style="background:var(--g50);"><i class="ti ti-users" style="color:var(--g600);"></i></div><div class="int-name">myISP — Staffing Portal</div><span class="int-tag">Sandbox</span></div>
+          <div class="int-row"><div class="int-icon" style="background:var(--b50);"><i class="ti ti-calculator" style="color:var(--b600);"></i></div><div class="int-name">ADM Estimator Tool</div><span class="int-tag">Sandbox</span></div>
         </div>
       </div>
     </div>
 
-    <!-- DEAL GOVERNANCE -->
+    <!-- ── DEAL GOVERNANCE ── -->
     <div class="view" id="view-deal">
-      <div class="view-header">
-        <div>
-          <h2 class="view-title">Deal governance</h2>
-          <p class="view-subtitle">Enter deal details — the system determines tier, required approvals, and routes to DSP automatically.</p>
+      <div class="view-hd"><div><h2 class="view-title">Deal governance</h2><p class="view-sub">Enter deal details — the system classifies the tier, sets required approvals and routes to DSP automatically.</p></div></div>
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="deal-form-grid">
+          <div class="fg"><label class="form-label">Deal name</label><input class="form-input" id="dealName" placeholder="e.g. Cloud Migration — APAC Banking" oninput="evalDeal()"></div>
+          <div class="fg"><label class="form-label">Client name</label><input class="form-input" id="clientName" placeholder="e.g. ANZ Bank" oninput="evalDeal()"></div>
+          <div class="fg"><label class="form-label">Deal value (USD)</label><div class="ipre"><span class="ipre-sym">$</span><input class="form-input" id="dealValue" type="number" placeholder="0" min="0" oninput="evalDeal()"></div></div>
+          <div class="fg"><label class="form-label">Deal type</label><select class="form-input" id="dealType" onchange="evalDeal()"><option value="">Select type</option><option>Cloud migration</option><option>Landing zone</option><option>Application modernisation</option><option>Managed services</option><option>Digital transformation</option></select></div>
+        </div>
+        <div class="tier-result" id="tierResult"></div>
+      </div>
+
+      <div class="tier-grid3" id="tierGrid"></div>
+
+      <div id="approvalBlock" style="display:none;">
+        <div class="sec-label">Approval workflow</div>
+        <div class="flow-wrap">
+          <div class="appr-track" id="apprTrack"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-pri" onclick="submitToDSP()"><i class="ti ti-send"></i> Submit to DSP</button>
+            <button class="btn btn-sec" onclick="exportDealPack()"><i class="ti ti-download"></i> Export deal pack</button>
+            <button class="btn btn-sec" onclick="nav('estimator')"><i class="ti ti-calculator"></i> Go to ADM estimator</button>
+          </div>
         </div>
       </div>
 
-      <div class="deal-input-card">
-        <div class="deal-form-row">
-          <div class="form-group">
-            <label class="form-label">Deal name</label>
-            <input class="form-input" type="text" id="dealName" placeholder="e.g. Cloud Migration — APAC Banking" oninput="DealAgent.onInput()">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Client name</label>
-            <input class="form-input" type="text" id="clientName" placeholder="e.g. ANZ Bank" oninput="DealAgent.onInput()">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Deal value (USD)</label>
-            <div class="input-prefix-wrap">
-              <span class="input-prefix">$</span>
-              <input class="form-input has-prefix" type="number" id="dealValue" placeholder="0" oninput="DealAgent.evaluate()" min="0">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Deal type</label>
-            <select class="form-input" id="dealType" onchange="DealAgent.onInput()">
-              <option value="">Select type</option>
-              <option value="Cloud Migration">Cloud migration</option>
-              <option value="Landing Zone">Landing zone</option>
-              <option value="Application Modernisation">Application modernisation</option>
-              <option value="Managed Services">Managed services</option>
-              <option value="Digital Transformation">Digital transformation</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="tier-result" id="tierResult" style="display:none;"></div>
-      </div>
-
-      <div class="deal-tiers-display" id="dealTiersDisplay"></div>
-
-      <div class="approval-workflow-card" id="approvalWorkflowCard" style="display:none;">
-        <div class="section-hd">Approval workflow — triggered for this deal</div>
-        <div class="approval-track" id="approvalTrack"></div>
-        <div class="approval-actions">
-          <button class="btn-primary" onclick="DSPAgent.submitDeal()">
-            <i class="ti ti-send"></i> Submit to DSP
-          </button>
-          <button class="btn-secondary" onclick="DealAgent.exportDealPack()">
-            <i class="ti ti-download"></i> Export deal pack
-          </button>
+      <div class="sec-label">DSP submission flow</div>
+      <div class="flow-wrap">
+        <div class="flow-steps">
+          <div class="flow-step"><div class="flow-icon fi-pur"><i class="ti ti-file-description"></i></div><div class="flow-step-name">Deal intake</div><div class="flow-step-sub">Submission</div></div>
+          <div class="flow-arr"></div>
+          <div class="flow-step"><div class="flow-icon fi-amb"><i class="ti ti-filter"></i></div><div class="flow-step-name">Tier assessment</div><div class="flow-step-sub">Deal size check</div></div>
+          <div class="flow-arr"></div>
+          <div class="flow-step"><div class="flow-icon fi-blu"><i class="ti ti-users"></i></div><div class="flow-step-name">Approval routing</div><div class="flow-step-sub">DCSO / QA / SL</div></div>
+          <div class="flow-arr"></div>
+          <div class="flow-step"><div class="flow-icon fi-tea"><i class="ti ti-circle-check"></i></div><div class="flow-step-name">Sign-off</div><div class="flow-step-sub">DSP confirmation</div></div>
+          <div class="flow-arr"></div>
+          <div class="flow-step"><div class="flow-icon fi-grn"><i class="ti ti-rocket"></i></div><div class="flow-step-name">Deal activated</div><div class="flow-step-sub">Mobilisation</div></div>
         </div>
       </div>
     </div>
 
-    <!-- ADM ESTIMATOR -->
+    <!-- ── ADM ESTIMATOR ── -->
     <div class="view" id="view-estimator">
-      <div class="view-header">
-        <div>
-          <h2 class="view-title">ADM estimator</h2>
-          <p class="view-subtitle">Effort and cost estimation aligned to Accenture ADM methodology. Outputs feed directly into DSP and myISP.</p>
-        </div>
-        <button class="btn-secondary" onclick="ADMAgent.exportToADM()">
-          <i class="ti ti-external-link"></i> Open in ADM
-        </button>
+      <div class="view-hd">
+        <div><h2 class="view-title">ADM estimator</h2><p class="view-sub">ADM-aligned effort & cost estimation. Outputs feed directly into DSP and myISP.</p></div>
+        <button class="btn btn-sec" onclick="openADM()"><i class="ti ti-external-link"></i> Open in ADM</button>
       </div>
-      <div class="estimator-layout">
-        <div class="estimator-inputs">
-          <div class="card">
+      <div class="est-layout">
+        <div>
+          <div class="card" style="margin-bottom:1rem;">
             <div class="card-hd">Project parameters</div>
-            <div class="param-grid" id="paramGrid"></div>
+            <div class="param-grid">
+              <div class="fg"><label class="form-label">Contingency (%)</label><input class="form-input rc-inp" id="pCont" type="number" value="15" min="0" max="50" oninput="calcEst()"></div>
+              <div class="fg"><label class="form-label">Overhead (%)</label><input class="form-input rc-inp" id="pOver" type="number" value="10" min="0" max="30" oninput="calcEst()"></div>
+              <div class="fg"><label class="form-label">Region</label><select class="form-input" id="pReg" onchange="calcEst()"><option>APAC</option><option>EMEA</option><option>NA</option></select></div>
+              <div class="fg"><label class="form-label">Currency</label><select class="form-input" id="pCur" onchange="calcEst()"><option>USD</option><option>AUD</option><option>GBP</option></select></div>
+            </div>
           </div>
-          <div class="card" style="margin-top:1rem;">
+          <div class="card">
             <div class="card-hd">Role configuration</div>
-            <div id="roleConfigTable"></div>
-            <button class="btn-ghost" onclick="ADMAgent.addRole()" style="margin-top:0.75rem;">
-              <i class="ti ti-plus"></i> Add role
-            </button>
+            <div class="role-tbl-hd"><span class="rth">Role</span><span class="rth">FTEs</span><span class="rth">Weeks</span><span class="rth">Rate/wk</span><span></span></div>
+            <div id="roleRows"></div>
+            <button class="btn btn-ghost" style="margin-top:.75rem;font-size:12.5px;" onclick="addRole()"><i class="ti ti-plus"></i> Add role</button>
           </div>
         </div>
-        <div class="estimator-output">
-          <div class="card estimate-summary">
+        <div>
+          <div class="card" style="margin-bottom:1rem;">
             <div class="card-hd">Estimate summary</div>
-            <div id="estimateSummary"></div>
+            <div id="estSummary"></div>
           </div>
-          <div class="card" style="margin-top:1rem;">
+          <div class="card" style="margin-bottom:1rem;">
             <div class="card-hd">Effort by phase</div>
-            <div class="phase-bars" id="phaseBars"></div>
+            <div class="ph-bars" id="phBars"></div>
           </div>
-          <div class="card" style="margin-top:1rem;">
+          <div class="card">
             <div class="card-hd">Export options</div>
-            <div class="export-btns">
-              <button class="btn-secondary" onclick="ADMAgent.exportCSV()"><i class="ti ti-file-spreadsheet"></i> ADM input CSV</button>
-              <button class="btn-secondary" onclick="ADMAgent.exportJSON()"><i class="ti ti-file-code"></i> JSON payload</button>
-              <button class="btn-primary" onclick="ADMAgent.pushToDSP()"><i class="ti ti-route"></i> Push to DSP</button>
+            <div class="exp-btns">
+              <button class="btn btn-sec btn-sm" onclick="exportEstCSV()"><i class="ti ti-file-spreadsheet"></i> ADM CSV</button>
+              <button class="btn btn-sec btn-sm" onclick="exportEstJSON()"><i class="ti ti-file-code"></i> JSON payload</button>
+              <button class="btn btn-pri btn-sm" onclick="pushEstToDSP()"><i class="ti ti-route"></i> Push to DSP</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- myISP RESOURCES -->
+    <!-- ── myISP ── -->
     <div class="view" id="view-resources">
-      <div class="view-header">
-        <div>
-          <h2 class="view-title">myISP resource management</h2>
-          <p class="view-subtitle">Generate, review and raise resource requests directly to myISP. Pre-filled from your deal and estimator data.</p>
-        </div>
-        <button class="btn-primary" onclick="ISPAgent.openMyISP()">
-          <i class="ti ti-external-link"></i> Open myISP
-        </button>
+      <div class="view-hd">
+        <div><h2 class="view-title">myISP resource management</h2><p class="view-sub">Generate, review and raise resource requests directly to myISP. Pre-filled from your deal and estimator data.</p></div>
+        <button class="btn btn-pri" onclick="toast('Opening myISP — SSO required in production','info')"><i class="ti ti-external-link"></i> Open myISP</button>
       </div>
       <div class="isp-layout">
-        <div class="isp-form-col">
-          <div class="card">
-            <div class="card-hd">Resource request builder</div>
-            <div id="ispRequestForm"></div>
+        <div class="card">
+          <div class="card-hd">Resource request builder</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="fg"><label class="form-label">Request title</label><input class="form-input" value="Landing Zone Delivery — Resource Request" id="ispTitle"></div>
+            <div class="fg"><label class="form-label">Project code</label><input class="form-input" value="PRJ-2025-LZ-001"></div>
+            <div class="fg"><label class="form-label">Start date</label><input class="form-input" type="date" id="ispDate"></div>
+            <div class="fg"><label class="form-label">Priority</label><select class="form-input"><option>High</option><option selected>Critical</option><option>Medium</option></select></div>
+            <div class="fg"><label class="form-label">Notes</label><textarea class="form-input" rows="3" style="resize:vertical;" placeholder="Specific skill requirements or constraints..."></textarea></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn btn-pri btn-sm" onclick="submitISP()"><i class="ti ti-send"></i> Submit to myISP</button>
+              <button class="btn btn-sec btn-sm" onclick="exportFTE()"><i class="ti ti-download"></i> Export FTE plan</button>
+            </div>
           </div>
         </div>
-        <div class="isp-table-col">
-          <div class="card">
+        <div>
+          <div class="card" style="margin-bottom:1rem;">
             <div class="card-hd">FTE demand plan</div>
-            <div id="ispDemandTable"></div>
+            <table class="isp-tbl">
+              <thead><tr><th>Role</th><th>FTEs</th><th>Skill</th><th>Start</th><th>End</th><th>Priority</th></tr></thead>
+              <tbody id="ispTblBody"></tbody>
+            </table>
           </div>
-          <div class="card" style="margin-top:1rem;">
-            <div class="card-hd">Mobilisation timeline</div>
-            <div id="ispMobilisationChart"></div>
+          <div class="card">
+            <div class="card-hd">Mobilisation timeline (weekly FTE demand)</div>
+            <div class="mob-bars" id="mobBars"></div>
+            <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10.5px;font-family:var(--fm);color:var(--ink-400);"><span>Wk 1</span><span>Wk 5</span><span>Wk 10</span><span>Wk 15</span><span>Wk 20</span></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- TIMELINE -->
+    <!-- ── TIMELINE ── -->
     <div class="view" id="view-timeline">
-      <div class="view-header">
-        <div>
-          <h2 class="view-title">Timeline & delivery phases</h2>
-          <p class="view-subtitle">20-week standard landing zone delivery programme. Expand each phase for activities, FTE requirements and environment strategy.</p>
+      <div class="view-hd">
+        <div><h2 class="view-title">Timeline & delivery phases</h2><p class="view-sub">20-week standard landing zone delivery programme. Click phases to expand activity details.</p></div>
+        <button class="btn btn-sec" onclick="exportGantt()"><i class="ti ti-download"></i> Export Gantt</button>
+      </div>
+      <div class="env-strip">
+        <div class="env-lane"><div class="env-dot ed-dev"></div><span>Dev environment</span><span class="env-wk">Wk 2–20</span></div>
+        <div class="env-lane"><div class="env-dot ed-uat"></div><span>UAT environment</span><span class="env-wk">Wk 6–18</span></div>
+        <div class="env-lane"><div class="env-dot ed-pro"></div><span>Production</span><span class="env-wk">Wk 16–20</span></div>
+      </div>
+      <div id="phaseBlocks"></div>
+      <div class="sec-label">Gantt overview</div>
+      <div class="gantt-wrap">
+        <div class="gantt-hd">
+          <div class="gantt-hc">Phase</div>
+          <div class="gantt-hc">FTEs</div>
+          <div class="gantt-hc"><div class="gantt-wks"><span class="gantt-wk">Wk 1</span><span class="gantt-wk">Wk 5</span><span class="gantt-wk">Wk 10</span><span class="gantt-wk">Wk 15</span><span class="gantt-wk">Wk 20</span></div></div>
         </div>
-        <button class="btn-secondary" onclick="TimelineAgent.exportGantt()">
-          <i class="ti ti-download"></i> Export Gantt
-        </button>
+        <div id="ganttRows"></div>
       </div>
-      <div class="env-strategy-banner">
-        <div class="env-lane"><div class="env-dot dev"></div><span>Dev environment</span><span class="env-wk">Wk 2–20</span></div>
-        <div class="env-lane"><div class="env-dot uat"></div><span>UAT environment</span><span class="env-wk">Wk 6–18</span></div>
-        <div class="env-lane"><div class="env-dot prod"></div><span>Production</span><span class="env-wk">Wk 16–20</span></div>
-      </div>
-      <div id="phasesContainer"></div>
-      <div class="section-hd" style="margin-top:2rem;">Gantt overview</div>
-      <div class="gantt-wrap" id="ganttWrap"></div>
     </div>
 
-    <!-- DELIVERABLES -->
+    <!-- ── DELIVERABLES ── -->
     <div class="view" id="view-deliverables">
-      <div class="view-header">
-        <div>
-          <h2 class="view-title">Deliverables tracker</h2>
-          <p class="view-subtitle">All formal artefacts for landing zone delivery. Click any deliverable to update status or assign an owner.</p>
-        </div>
+      <div class="view-hd">
+        <div><h2 class="view-title">Deliverables tracker</h2><p class="view-sub">All formal artefacts for landing zone delivery. Click any deliverable to update status or assign an owner.</p></div>
         <div class="filter-row">
-          <button class="filter-btn active" onclick="DeliverablesAgent.filter('all',this)">All</button>
-          <button class="filter-btn" onclick="DeliverablesAgent.filter('in_progress',this)">In progress</button>
-          <button class="filter-btn" onclick="DeliverablesAgent.filter('pending',this)">Pending</button>
-          <button class="filter-btn" onclick="DeliverablesAgent.filter('complete',this)">Complete</button>
+          <button class="fb active" onclick="filterDelivs('all',this)">All</button>
+          <button class="fb" onclick="filterDelivs('in_progress',this)">In progress</button>
+          <button class="fb" onclick="filterDelivs('pending',this)">Pending</button>
+          <button class="fb" onclick="filterDelivs('complete',this)">Complete</button>
         </div>
       </div>
       <div class="deliv-grid" id="delivGrid"></div>
     </div>
 
-    <!-- DSP PORTAL -->
+    <!-- ── DSP PORTAL ── -->
     <div class="view" id="view-dsp">
-      <div class="view-header">
-        <div>
-          <h2 class="view-title">DSP portal</h2>
-          <p class="view-subtitle">Deal Structuring Platform — manage submissions, track approvals and monitor deal status.</p>
-        </div>
-        <button class="btn-primary" onclick="DSPAgent.openDSP()">
-          <i class="ti ti-external-link"></i> Open DSP
-        </button>
+      <div class="view-hd">
+        <div><h2 class="view-title">DSP portal</h2><p class="view-sub">Deal Structuring Platform — manage submissions, track approvals and monitor deal status.</p></div>
+        <button class="btn btn-pri" onclick="toast('Opening DSP portal — SSO required in production','info')"><i class="ti ti-external-link"></i> Open DSP</button>
       </div>
       <div id="dspContent"></div>
     </div>
 
-    <!-- AI AGENTS -->
+    <!-- ── AI AGENTS ── -->
     <div class="view" id="view-agents">
-      <div class="view-header">
-        <div>
-          <h2 class="view-title">AI agents</h2>
-          <p class="view-subtitle">Specialised agents that automate governance, estimation, resourcing and delivery tasks. Each agent has a defined scope and can be triggered manually or automatically.</p>
-        </div>
+      <div class="view-hd">
+        <div><h2 class="view-title">AI agents</h2><p class="view-sub">Specialised agents that automate governance, estimation, resourcing and delivery tasks. Trigger individually or run all sequentially.</p></div>
+        <button class="btn btn-pri" onclick="runAllAgents()"><i class="ti ti-player-play"></i> Run all agents</button>
       </div>
       <div class="agents-grid" id="agentsGrid"></div>
-      <div class="agent-console">
-        <div class="console-hd">
-          <i class="ti ti-terminal-2"></i> Agent activity log
-          <button class="console-clear" onclick="AgentOrchestrator.clearLog()">Clear</button>
-        </div>
+      <div class="console">
+        <div class="console-hd"><i class="ti ti-terminal-2"></i> Agent activity log<button class="console-clr" onclick="clearLog()">Clear</button></div>
         <div class="console-body" id="agentLog"></div>
       </div>
     </div>
 
-  </main>
-</div>
+    <!-- ── REPORTS ── -->
+    <div class="view" id="view-report">
+      <div class="view-hd">
+        <div><h2 class="view-title">Reports</h2><p class="view-sub">Generate full governance, estimation, delivery and resource reports. Export as PDF or CSV.</p></div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-sec" onclick="exportReportCSV()"><i class="ti ti-file-spreadsheet"></i> Export CSV</button>
+          <button class="btn btn-pri" onclick="printReport()"><i class="ti ti-printer"></i> Print / Save PDF</button>
+        </div>
+      </div>
+
+      <div class="report-kpi">
+        <div class="rk-card"><div class="rk-val">3</div><div class="rk-label">Active deals</div></div>
+        <div class="rk-card"><div class="rk-val">$25.8M</div><div class="rk-label">Total pipeline value</div></div>
+        <div class="rk-card"><div class="rk-val">24</div><div class="rk-label">FTEs deployed</div></div>
+        <div class="rk-card"><div class="rk-val">8</div><div class="rk-label">Deliverables tracked</div></div>
+      </div>
+
+      <div class="report-section">
+        <div class="report-title">Deal governance summary</div>
+        <table class="report-table">
+          <thead><tr><th>Deal ID</th><th>Deal name</th><th>Client</th><th>Value</th><th>Tier</th><th>Status</th><th>Progress</th></tr></thead>
+          <tbody id="rptDealBody"></tbody>
+        </table>
+      </div>
+
+      <div class="report-section">
+        <div class="report-title">ADM estimate breakdown</div>
+        <div id="rptEstimate"></div>
+      </div>
+
+      <div class="report-section">
+        <div class="report-title">FTE resource demand plan</div>
+        <table class="report-table">
+          <thead><tr><th>Role</th><th>FTEs</th><th>Skill area</th><th>Wk start</th><th>Wk end</th><th>Priority</th></tr></thead>
+          <tbody id="rptISPBody"></tbody>
+        </table>
+      </div>
+
+      <div class="report-section">
+        <div class="report-title">Deliverables status</div>
+        <table class="report-table">
+          <thead><tr><th>Deliverable</th><th>Owner</th><th>Phase</th><th>Status</th></tr></thead>
+          <tbody id="rptDelivBody"></tbody>
+        </table>
+      </div>
+
+      <div class="report-section">
+        <div class="report-title">Delivery timeline summary</div>
+        <table class="report-table">
+          <thead><tr><th>Phase</th><th>Weeks</th><th>FTEs</th><th>Key activities</th></tr></thead>
+          <tbody id="rptTimeBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
 
 <!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="App.closeModal()">
-  <div class="modal" id="modal" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <span id="modalTitle">Modal</span>
-      <button class="modal-close" onclick="App.closeModal()"><i class="ti ti-x"></i></button>
-    </div>
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-hd"><span id="modalTitle">Modal</span><button class="modal-x" onclick="closeModal()"><i class="ti ti-x"></i></button></div>
     <div class="modal-body" id="modalBody"></div>
-    <div class="modal-footer" id="modalFooter"></div>
+    <div class="modal-foot" id="modalFoot"></div>
   </div>
 </div>
 
 <!-- TOAST -->
-<div class="toast-container" id="toastContainer"></div>
+<div class="toast-wrap" id="toastWrap"></div>
 
-<script src="data/data.js"></script>
-<script src="agents/orchestrator.js"></script>
-<script src="agents/deal-agent.js"></script>
-<script src="agents/adm-agent.js"></script>
-<script src="agents/isp-agent.js"></script>
-<script src="agents/dsp-agent.js"></script>
-<script src="agents/timeline-agent.js"></script>
-<script src="agents/deliverables-agent.js"></script>
-<script src="app.js"></script>
+<script>
+// ── DATA ──
+const PHASES=[
+  {id:'p1',name:'Phase 1 — Mobilisation & setup',sub:'Resource onboarding, landing zone provisioning, security baseline',wk:'Wk 1–4',fte:6,ico:'ti-flag',ibg:'rgba(161,0,255,.1)',ic:'#A100FF',gs:0,ge:20,gc:'#7F77DD',
+   acts:[{n:1,name:'Resource mobilisation & onboarding',fte:'6 FTE',dur:'Wk 1–2'},{n:2,name:'Environment strategy definition (Dev/UAT/Prod)',fte:'3 FTE',dur:'Wk 1–3'},{n:3,name:'Landing zone provisioning (secured, standard)',fte:'5 FTE',dur:'Wk 2–4'},{n:4,name:'IAM, network & security baseline configuration',fte:'4 FTE',dur:'Wk 3–4'}]},
+  {id:'p2',name:'Phase 2 — Deployment',sub:'CI/CD pipeline, IaC automation, application deployment to Dev & UAT',wk:'Wk 5–10',fte:5,ico:'ti-rocket',ibg:'#E6F1FB',ic:'#185FA5',gs:20,ge:50,gc:'#378ADD',
+   acts:[{n:5,name:'CI/CD pipeline build & IaC automation',fte:'4 FTE',dur:'Wk 5–7'},{n:6,name:'Application deployment to Dev environment',fte:'5 FTE',dur:'Wk 6–8'},{n:7,name:'Application deployment to UAT environment',fte:'5 FTE',dur:'Wk 8–10'},{n:8,name:'Monitoring & observability configuration',fte:'3 FTE',dur:'Wk 7–10'}]},
+  {id:'p3',name:'Phase 3 — Testing',sub:'E2E integration, performance, security penetration & UAT sign-off',wk:'Wk 11–15',fte:4,ico:'ti-test-pipe',ibg:'#FAEEDA',ic:'#BA7517',gs:50,ge:75,gc:'#EF9F27',
+   acts:[{n:9,name:'End-to-end integration testing',fte:'4 FTE',dur:'Wk 11–13'},{n:10,name:'Performance & load testing',fte:'3 FTE',dur:'Wk 12–14'},{n:11,name:'Security & penetration testing',fte:'2 FTE',dur:'Wk 13–15'},{n:12,name:'UAT execution & defect resolution',fte:'4 FTE',dur:'Wk 13–15'}]},
+  {id:'p4',name:'Phase 4 — Go-live & hypercare',sub:'Production deployment, 24×7 war room support, client sign-off',wk:'Wk 16–20',fte:6,ico:'ti-circle-check',ibg:'#E1F5EE',ic:'#0F6E56',gs:75,ge:100,gc:'#1D9E75',
+   acts:[{n:13,name:'Production deployment & cutover',fte:'6 FTE',dur:'Wk 16–17'},{n:14,name:'Hypercare support (24×7 war room)',fte:'5 FTE',dur:'Wk 17–19'},{n:15,name:'Operations handover to run-state team',fte:'3 FTE',dur:'Wk 19–20'},{n:16,name:'Go-live review & client sign-off',fte:'2 FTE',dur:'Wk 20'}]},
+];
+
+const DELIVS=[
+  {id:'hld',name:'High-level design (HLD)',owner:'Solution Lead + Architect',phase:'Phase 1–2',ico:'ti-layout-2',ibg:'rgba(161,0,255,.1)',ic:'#A100FF',status:'in_progress'},
+  {id:'lld',name:'Low-level design (LLD)',owner:'Platform + App Architect',phase:'Phase 2',ico:'ti-sitemap',ibg:'#E6F1FB',ic:'#185FA5',status:'pending'},
+  {id:'ops',name:'Operations document',owner:'Operations Lead',phase:'Phase 4',ico:'ti-settings',ibg:'#E1F5EE',ic:'#0F6E56',status:'pending'},
+  {id:'des',name:'Design document',owner:'Solution Architect',phase:'Phase 2',ico:'ti-pencil-code',ibg:'#FAEEDA',ic:'#BA7517',status:'in_progress'},
+  {id:'trn',name:'Transition document',owner:'Transition Manager',phase:'Phase 4',ico:'ti-transfer',ibg:'#FAECE7',ic:'#993C1D',status:'pending'},
+  {id:'hyp',name:'Hypercare support plan',owner:'Operations + Service Lead',phase:'Phase 4',ico:'ti-headset',ibg:'#EAF3DE',ic:'#3B6D11',status:'pending'},
+  {id:'gol',name:'Go-live sign-off report',owner:'Delivery Manager + Client',phase:'Phase 4',ico:'ti-circle-check',ibg:'#E1F5EE',ic:'#0F6E56',status:'pending'},
+  {id:'tst',name:'Test evidence pack',owner:'QA Engineer + Release Manager',phase:'Phase 3',ico:'ti-clipboard-check',ibg:'rgba(161,0,255,.08)',ic:'#A100FF',status:'in_progress'},
+];
+
+let roles=[
+  {id:'r1',role:'Cloud Platform Engineer',fte:2,weeks:16,rate:1800},
+  {id:'r2',role:'Application Architect',fte:1,weeks:12,rate:2200},
+  {id:'r3',role:'DevOps Lead',fte:1,weeks:14,rate:2000},
+  {id:'r4',role:'QA Engineer',fte:2,weeks:8,rate:1500},
+  {id:'r5',role:'Security SME',fte:1,weeks:6,rate:2400},
+  {id:'r6',role:'Project Manager',fte:1,weeks:20,rate:2100},
+];
+
+const ISP_PLAN=[
+  {role:'Cloud Platform Engineer',fte:2,skill:'Cloud/IaC',ws:1,we:16,pri:'High'},
+  {role:'Application Architect',fte:1,skill:'Solution design',ws:1,we:12,pri:'Critical'},
+  {role:'DevOps Lead',fte:1,skill:'CI/CD',ws:3,we:14,pri:'High'},
+  {role:'QA Engineer',fte:2,skill:'Testing',ws:8,we:16,pri:'Medium'},
+  {role:'Security SME',fte:1,skill:'Security',ws:2,we:8,pri:'High'},
+  {role:'Project Manager',fte:1,skill:'PMO',ws:1,we:20,pri:'Critical'},
+  {role:'Network Architect',fte:1,skill:'Networking',ws:2,we:6,pri:'Medium'},
+  {role:'SRE',fte:1,skill:'Observability',ws:6,we:18,pri:'Medium'},
+];
+
+const DSP_DEALS=[
+  {id:'DSP-2025-001',name:'Cloud Migration — APAC Banking',client:'ANZ Bank',value:'$8.2M',tier:'T2',status:'In review',prog:65,reviewers:[{i:'SK',name:'Sarah Kim',role:'DCSO',st:'approved'},{i:'MT',name:'Mark Thompson',role:'Solution Lead',st:'pending'},{i:'AL',name:'Alex Lee',role:'QA',st:'required'}]},
+  {id:'DSP-2025-002',name:'Landing Zone — Gov Cloud',client:'Dept. of Finance',value:'$3.1M',tier:'T1',status:'Approved',prog:100,reviewers:[]},
+  {id:'DSP-2025-003',name:'Digital Transformation',client:'Telstra',value:'$14.5M',tier:'T3',status:'Pending board',prog:30,reviewers:[{i:'RJ',name:'Rachel Jones',role:'DCSO',st:'required'},{i:'BW',name:'Ben Wilson',role:'Solution Lead',st:'required'},{i:'CH',name:'Carol Hayes',role:'QA',st:'required'}]},
+];
+
+const AGENTS=[
+  {id:'ag_deal',name:'Deal governance agent',role:'Deal classification & routing',desc:'Evaluates deal parameters, classifies tiers, identifies required approvers and routes submissions to DSP automatically.',ico:'ti-shield-check',abg:'rgba(161,0,255,.12)',
+   caps:['Deal tier classification (T1/T2/T3)','DSP approval routing','Deal pack generation','Approval chain notification']},
+  {id:'ag_adm',name:'ADM estimator agent',role:'Effort & cost estimation',desc:'Runs ADM-aligned estimation across phases and roles, calculates FTE demand, generates exportable input files for the ADM tool.',ico:'ti-calculator',abg:'#E6F1FB',
+   caps:['Role × week × rate calculation','Phase effort distribution','ADM CSV/JSON export','DSP cost push']},
+  {id:'ag_isp',name:'myISP resource agent',role:'Resource mobilisation',desc:'Generates structured resource requests from deal and estimator data, produces myISP-ready FTE demand plans and mobilisation schedules.',ico:'ti-users',abg:'#E1F5EE',
+   caps:['FTE demand planning','myISP request generation','Mobilisation timeline','Skill gap identification']},
+  {id:'ag_dsp',name:'DSP integration agent',role:'Deal submission & tracking',desc:'Manages end-to-end DSP submission lifecycle — pre-fills forms, tracks approval status and sends escalation alerts.',ico:'ti-route',abg:'rgba(161,0,255,.1)',
+   caps:['DSP form pre-population','Approval status tracking','Escalation alerts','Deal archive management']},
+  {id:'ag_tl',name:'Timeline & delivery agent',role:'Programme planning',desc:'Generates delivery timelines from deal scope, adjusts phase durations, exports Gantt charts and flags schedule risks.',ico:'ti-calendar-stats',abg:'#FAEEDA',
+   caps:['Phase timeline generation','Gantt chart export','Risk flag identification','Milestone tracking']},
+  {id:'ag_del',name:'Deliverables agent',role:'Artefact tracking & review',desc:'Tracks all formal deliverables, sends review reminders, validates completeness against gate criteria and manages sign-off workflow.',ico:'ti-clipboard-check',abg:'#EAF3DE',
+   caps:['Artefact status tracking','Gate review validation','Sign-off workflow','Completeness checks']},
+];
+
+// ── STATE ──
+let logLines=[], currentFilter='all', dealTier=null;
+
+// ── NAVIGATION ──
+const BC={home:'Command centre',deal:'Deal governance',estimator:'ADM estimator',resources:'myISP resources',timeline:'Timeline & phases',deliverables:'Deliverables',dsp:'DSP portal',agents:'AI agents',report:'Reports'};
+function nav(v){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
+  document.getElementById('view-'+v).classList.add('active');
+  document.getElementById('bcCur').textContent=BC[v]||v;
+  if(v==='estimator')renderEst();
+  if(v==='resources')renderISP();
+  if(v==='timeline')renderTimeline();
+  if(v==='deliverables')renderDelivs('all');
+  if(v==='dsp')renderDSP();
+  if(v==='agents')renderAgents();
+  if(v==='report')renderReport();
+  if(window.innerWidth<800)document.getElementById('sidebar').classList.remove('open');
+}
+
+// ── ROLE ──
+const ROLE_LABELS={deal_owner:'Deal Owner',solution_lead:'Solution Lead',resource_manager:'Resource Manager',dcso:'DCSO / QA',delivery_manager:'Delivery Manager'};
+const ROLE_STATS={
+  deal_owner:[{label:'Active deals',val:'3',sub:'↑ 1 this month',cls:'stat-up'},{label:'Pending approvals',val:'2',sub:'DSP submissions',cls:''},{label:'Total pipeline',val:'$25.8M',sub:'3 deals',cls:'stat-up'},{label:'Deals won',val:'12',sub:'YTD 2025',cls:'stat-up'}],
+  solution_lead:[{label:'Active deals',val:'3',sub:'Requiring HLD',cls:''},{label:'HLD reviews due',val:'1',sub:'Overdue 2d',cls:'stat-dn'},{label:'Deliverables due',val:'3',sub:'This sprint',cls:''},{label:'Team FTEs',val:'24',sub:'Across 4 phases',cls:''}],
+  resource_manager:[{label:'Open requests',val:'2',sub:'myISP queue',cls:''},{label:'FTEs deployed',val:'18',sub:'Of 24 planned',cls:'stat-up'},{label:'Mobilisation',val:'Wk 3',sub:'Next milestone',cls:''},{label:'Skill gaps',val:'1',sub:'Network Architect',cls:'stat-dn'}],
+  dcso:[{label:'Pending approvals',val:'2',sub:'Awaiting review',cls:'stat-dn'},{label:'Security reviews',val:'5',sub:'Completed YTD',cls:'stat-up'},{label:'Risk flags',val:'1',sub:'T3 deal flagged',cls:'stat-dn'},{label:'Deals reviewed',val:'8',sub:'2025',cls:'stat-up'}],
+  delivery_manager:[{label:'Active projects',val:'3',sub:'Landing zones',cls:''},{label:'Milestones due',val:'2',sub:'This week',cls:''},{label:'Deliverables done',val:'1',sub:'Of 8 total',cls:'stat-dn'},{label:'Days to go-live',val:'62',sub:'Earliest deal',cls:''}],
+};
+function setRole(r){
+  document.getElementById('roleName').textContent=ROLE_LABELS[r]||r;
+  const stats=ROLE_STATS[r]||ROLE_STATS.deal_owner;
+  document.getElementById('statRow').innerHTML=stats.map(s=>`<div class="stat-card"><div class="stat-label">${s.label}</div><div class="stat-val">${s.val}</div><div class="stat-sub"><span class="${s.cls}">${s.sub}</span></div></div>`).join('');
+}
+
+// ── HOME ──
+function initHome(){
+  setRole('deal_owner');
+  document.getElementById('stepList').innerHTML=[
+    {dot:'s-done',ico:'ti-file-text',title:'Deal details entered',sub:'Deal name, client and value set',action:''},
+    {dot:'s-active',ico:'ti-shield-check',title:'Governance classification',sub:'Tier assessment and approval routing — pending',action:'<button class="btn btn-sec" style="font-size:12px;margin-top:6px;" onclick="nav(\'deal\')"><i class="ti ti-arrow-right"></i> Go to deal governance</button>'},
+    {dot:'s-todo',ico:'ti-calculator',title:'ADM estimation',sub:'Generate effort and cost estimate',action:'<button class="btn btn-ghost" style="font-size:12px;margin-top:6px;" onclick="nav(\'estimator\')">Open estimator ↗</button>'},
+    {dot:'s-todo',ico:'ti-users',title:'myISP resource request',sub:'Raise FTE demand plan',action:''},
+    {dot:'s-todo',ico:'ti-route',title:'DSP submission',sub:'Submit deal through DSP approval workflow',action:''},
+    {dot:'s-todo',ico:'ti-rocket',title:'Deal activation & mobilisation',sub:'Begin Phase 1 delivery',action:''},
+  ].map(s=>`<div class="step"><div class="step-dot ${s.dot}"><i class="ti ${s.ico}"></i></div><div class="step-body"><div class="step-title">${s.title}</div><div class="step-sub">${s.sub}</div>${s.action}</div></div>`).join('');
+}
+
+// ── DEAL ──
+function evalDeal(){
+  const v=parseFloat(document.getElementById('dealValue').value)||0;
+  const t=v<=0?null:v<5e6?1:v<10e6?2:3;
+  dealTier=t;
+  const name=document.getElementById('dealName').value;
+  if(name||v>0) document.getElementById('dealCtx').textContent=(name||'Deal')+(v>0?' · $'+(v/1e6).toFixed(1)+'M':'');
+
+  const res=document.getElementById('tierResult');
+  if(!t){res.className='tier-result';res.style.display='none';document.getElementById('approvalBlock').style.display='none';renderTierCards(null);return;}
+  const cfg={1:{cls:'tr-t1',icon:'✅',title:'Tier 1 — Small deal (< $5M)',sub:'No DCSO/QA or Solution Lead required. Route directly via DSP.',col:'var(--g600)'},
+    2:{cls:'tr-t2',icon:'⚡',title:'Tier 2 — Mid deal ($5M – $10M)',sub:'DCSO/QA and Solution Lead approval required. Submit via DSP.',col:'var(--a600)'},
+    3:{cls:'tr-t3',icon:'🔷',title:'Tier 3 — Large deal (> $10M)',sub:'Full governance board review required. All approvers must sign off via DSP.',col:'var(--ac)'}};
+  const c=cfg[t];
+  res.className='tier-result show '+c.cls;
+  res.innerHTML=`<div style="font-size:22px;">${c.icon}</div><div class="tr-body"><div class="tr-title" style="color:${c.col};">${c.title}</div><div class="tr-sub">${c.sub}</div></div><button class="btn btn-pri btn-sm" onclick="nav('dsp')"><i class="ti ti-route"></i> Submit to DSP</button>`;
+  renderTierCards(t);renderApprTrack(t);
+  document.getElementById('approvalBlock').style.display='block';
+}
+
+function renderTierCards(active){
+  const tiers=[
+    {n:1,range:'< $5M',name:'Small deal',stripe:'ts1',appr:[{name:'DCSO / QA',yes:false,cls:'at-no',tag:'Not required'},{name:'Solution lead',yes:false,cls:'at-no',tag:'Not required'},{name:'DSP routing',yes:true,cls:'at-req',tag:'Required'}]},
+    {n:2,range:'$5M – $10M',name:'Mid deal',stripe:'ts2',appr:[{name:'DCSO / QA',yes:true,cls:'at-req',tag:'Required'},{name:'Solution lead',yes:true,cls:'at-req',tag:'Required'},{name:'DSP routing',yes:true,cls:'at-req',tag:'Required'}]},
+    {n:3,range:'> $10M',name:'Large deal',stripe:'ts3',appr:[{name:'DCSO / QA',yes:true,cls:'at-mand',tag:'Mandatory'},{name:'Solution lead',yes:true,cls:'at-mand',tag:'Mandatory'},{name:'Gov. board',yes:true,cls:'at-mand',tag:'Mandatory'},{name:'DSP routing',yes:true,cls:'at-mand',tag:'Mandatory'}]},
+  ];
+  document.getElementById('tierGrid').innerHTML=tiers.map(t=>`<div class="tc ${active===t.n?'hi':''}"><div class="tc-stripe ${t.stripe}"></div><div class="tc-body"><div class="tc-tier">Tier ${t.n}</div><div class="tc-amt">${t.range}</div><div class="tc-name">${t.name}</div><div class="tc-div"></div><div class="tc-appr">${t.appr.map(a=>`<div class="appr-row"><div class="appr-dot ${a.yes?'ad-yes':'ad-no'}"><i class="ti ${a.yes?'ti-check':'ti-x'}"></i></div><span class="appr-name">${a.name}</span><span class="appr-tag ${a.cls}">${a.tag}</span></div>`).join('')}</div></div></div>`).join('');
+}
+
+function renderApprTrack(t){
+  const base=[{ico:'ti-file-description',name:'Deal intake',sub:'Submission',s:'asi-done'},{ico:'ti-filter',name:'Tier assessment',sub:'Size check',s:'asi-done'}];
+  const mid={1:[],2:[{ico:'ti-shield-check',name:'DCSO/QA',sub:'Review',s:'asi-pend'},{ico:'ti-user-check',name:'Solution lead',sub:'Sign-off',s:'asi-wait'}],3:[{ico:'ti-shield-check',name:'DCSO/QA',sub:'Review',s:'asi-pend'},{ico:'ti-user-check',name:'Solution lead',sub:'Sign-off',s:'asi-wait'},{ico:'ti-building',name:'Gov. board',sub:'Full review',s:'asi-wait'}]};
+  const end=[{ico:'ti-circle-check',name:'DSP sign-off',sub:'Confirmation',s:'asi-wait'},{ico:'ti-rocket',name:'Deal activated',sub:'Mobilise',s:'asi-wait'}];
+  const steps=[...base,...(mid[t]||[]),...end];
+  document.getElementById('apprTrack').innerHTML=steps.map((s,i)=>(i>0?'<div class="as-conn"></div>':'')+`<div class="appr-step"><div class="as-icon ${s.s}"><i class="ti ${s.ico}"></i></div><div class="as-name">${s.name}</div><div class="as-sub">${s.sub}</div></div>`).join('');
+}
+
+function submitToDSP(){
+  if(!dealTier){toast('Enter a deal value first','warning');return;}
+  const n=document.getElementById('dealName').value||'New deal';
+  toast('Deal "'+n+'" submitted to DSP — routing to approvers','success');
+  alog('DSPAgent','Deal submitted: "'+n+'" (Tier '+dealTier+') — awaiting DCSO/QA approval','success');
+  nav('dsp');
+}
+
+function exportDealPack(){
+  const pack={deal_name:document.getElementById('dealName').value||'Unnamed',client:document.getElementById('clientName').value||'',type:document.getElementById('dealType').value||'',value:parseFloat(document.getElementById('dealValue').value)||0,tier:dealTier,generated:new Date().toISOString()};
+  dl(JSON.stringify(pack,null,2),'application/json','deal-pack.json');
+  toast('Deal pack exported','success');
+}
+
+// ── ESTIMATOR ──
+function calcEst(){
+  const cont=parseFloat(document.getElementById('pCont')?.value)||15;
+  const over=parseFloat(document.getElementById('pOver')?.value)||10;
+  const base=roles.reduce((s,r)=>s+(r.fte*r.weeks*r.rate),0);
+  const cv=base*cont/100, ov=base*over/100, total=base+cv+ov;
+  const ftes=roles.reduce((s,r)=>s+r.fte,0), maxwk=Math.max(...roles.map(r=>r.weeks));
+  const fmt=n=>'$'+Math.round(n).toLocaleString();
+  const el=document.getElementById('estSummary');
+  if(el) el.innerHTML=`<div class="est-lbl">Total estimated cost</div><div class="est-total">${fmt(total)}</div><div class="est-brkdown"><div class="est-row"><span class="est-rl">Base effort cost</span><span class="est-rv">${fmt(base)}</span></div><div class="est-row"><span class="est-rl">Contingency (${cont}%)</span><span class="est-rv">${fmt(cv)}</span></div><div class="est-row"><span class="est-rl">Overhead (${over}%)</span><span class="est-rv">${fmt(ov)}</span></div><div class="est-row" style="border-top:1px solid var(--ink-100);padding-top:8px;margin-top:4px;"><span class="est-rl" style="font-weight:500;">Total FTEs</span><span class="est-rv" style="color:var(--ac);">${ftes} FTE</span></div><div class="est-row"><span class="est-rl" style="font-weight:500;">Duration</span><span class="est-rv">${maxwk} wks</span></div></div>`;
+  const pb=document.getElementById('phBars');
+  if(pb) pb.innerHTML=[{n:'Mobilisation',p:22,c:'#7F77DD'},{n:'Deployment',p:38,c:'#378ADD'},{n:'Testing',p:25,c:'#EF9F27'},{n:'Go-live',p:15,c:'#1D9E75'}].map(x=>`<div class="ph-bar-row"><div class="ph-bar-lbl">${x.n}</div><div class="ph-bar-track"><div class="ph-bar-fill" style="width:${x.p}%;background:${x.c};"></div></div><div class="ph-bar-val">${fmt(total*x.p/100)}</div></div>`).join('');
+  return {base,cv,ov,total,ftes,maxwk};
+}
+
+function renderRoles(){
+  document.getElementById('roleRows').innerHTML=roles.map((r,i)=>`<div class="role-row"><input class="rc-inp" type="text" value="${r.role}" onchange="roles[${i}].role=this.value;calcEst()"><input class="rc-inp" type="number" value="${r.fte}" min=".5" step=".5" onchange="roles[${i}].fte=+this.value;calcEst()"><input class="rc-inp" type="number" value="${r.weeks}" min="1" onchange="roles[${i}].weeks=+this.value;calcEst()"><input class="rc-inp" type="number" value="${r.rate}" min="0" step="100" onchange="roles[${i}].rate=+this.value;calcEst()"><button class="rc-del" onclick="roles.splice(${i},1);renderRoles();calcEst()" title="Remove"><i class="ti ti-trash"></i></button></div>`).join('');
+  calcEst();
+}
+
+function addRole(){roles.push({id:'r'+Date.now(),role:'New role',fte:1,weeks:8,rate:1500});renderRoles();toast('Role added','info');}
+function renderEst(){renderRoles();}
+function exportEstCSV(){const t=calcEst();const rows=[['Role','FTEs','Weeks','Rate','Total'],...roles.map(r=>[r.role,r.fte,r.weeks,r.rate,r.fte*r.weeks*r.rate]),['','','','Total',Math.round(t.total)]];dl(rows.map(r=>r.join(',')).join('\n'),'text/csv','adm-estimate.csv');toast('ADM CSV exported','success');}
+function exportEstJSON(){const t=calcEst();dl(JSON.stringify({roles,totals:t,generated:new Date().toISOString()},null,2),'application/json','adm-payload.json');toast('JSON exported','success');}
+function pushEstToDSP(){const t=calcEst();toast('Estimate pushed to DSP — $'+Math.round(t.total).toLocaleString(),'success');alog('ADMAgent','Estimate pushed to DSP: $'+Math.round(t.total).toLocaleString(),'success');}
+function openADM(){toast('Opening ADM tool — SSO required in production','info');alog('ADMAgent','Opening ADM external tool — SSO auth required','warning');}
+
+// ── myISP ──
+function renderISP(){
+  const pmap={Critical:'bg-red',High:'bg-amber',Medium:'bg-blue'};
+  document.getElementById('ispTblBody').innerHTML=ISP_PLAN.map(r=>`<tr><td style="font-weight:500;">${r.role}</td><td>${r.fte}</td><td style="font-size:12px;color:var(--ink-500);">${r.skill}</td><td style="font-family:var(--fm);font-size:12px;">Wk ${r.ws}</td><td style="font-family:var(--fm);font-size:12px;">Wk ${r.we}</td><td><span class="badge ${pmap[r.pri]||'bg-gray'}">${r.pri}</span></td></tr>`).join('');
+  const weeks=Array.from({length:20},(_,i)=>i+1);
+  const demand=weeks.map(w=>ISP_PLAN.filter(r=>w>=r.ws&&w<=r.we).reduce((s,r)=>s+r.fte,0));
+  const max=Math.max(...demand);
+  document.getElementById('mobBars').innerHTML=demand.map((d,i)=>`<div class="mob-bar" style="height:${Math.round(d/max*70)}px;opacity:${d/max>0.7?'0.85':'0.35'};" title="Wk${i+1}: ${d} FTEs"></div>`).join('');
+  const dateEl=document.getElementById('ispDate');if(dateEl)dateEl.value=new Date().toISOString().slice(0,10);
+}
+function submitISP(){toast('Resource request submitted to myISP (sandbox)','success');alog('ISPAgent',ISP_PLAN.length+' roles, '+ISP_PLAN.reduce((s,r)=>s+r.fte,0)+' FTEs submitted to myISP','success');}
+function exportFTE(){const rows=[['Role','FTEs','Skill','Wk Start','Wk End','Priority'],...ISP_PLAN.map(r=>[r.role,r.fte,r.skill,'Wk '+r.ws,'Wk '+r.we,r.pri])];dl(rows.map(r=>r.join(',')).join('\n'),'text/csv','fte-demand.csv');toast('FTE plan exported','success');}
+
+// ── TIMELINE ──
+function renderTimeline(){
+  document.getElementById('phaseBlocks').innerHTML=PHASES.map(p=>`<div class="phase-block"><button class="ph-hdr" onclick="togglePhase('${p.id}')"><div class="ph-ico" style="background:${p.ibg};"><i class="ti ${p.ico}" style="color:${p.ic};"></i></div><div class="ph-inf"><div class="ph-name">${p.name}</div><div class="ph-sub">${p.sub}</div></div><span class="ph-wk">${p.wk}</span><span class="badge bg-purple" style="margin-right:8px;">${p.fte} FTE</span><i class="ti ti-chevron-down ph-chev" id="chev-${p.id}"></i></button><div class="ph-body" id="body-${p.id}">${p.acts.map(a=>`<div class="act-row"><span class="act-num">${a.n}</span><span class="act-name">${a.name}</span><span class="act-fte">${a.fte}</span><span class="act-dur">${a.dur}</span></div>`).join('')}</div></div>`).join('');
+  document.getElementById('ganttRows').innerHTML=PHASES.map(p=>`<div class="gantt-row"><div class="gantt-lbl">${p.name.replace(/Phase \d — /,'')}</div><div class="gantt-fte">${p.fte} FTE</div><div class="gantt-bg"><div class="gantt-fill" style="left:${p.gs}%;width:${p.ge-p.gs}%;background:${p.gc};">${p.ge-p.gs>15?p.name.replace(/Phase \d — /,'').split(' ')[0]:''}</div></div></div>`).join('');
+}
+function togglePhase(id){const b=document.getElementById('body-'+id),c=document.getElementById('chev-'+id);if(!b)return;const o=b.classList.toggle('open');if(c)c.classList.toggle('open',o);}
+function exportGantt(){const rows=[['Phase','Weeks','FTEs'],...PHASES.map(p=>[p.name,p.wk,p.fte])];dl(rows.map(r=>r.join(',')).join('\n'),'text/csv','gantt.csv');toast('Gantt exported','success');}
+
+// ── DELIVERABLES ──
+const stCls={in_progress:'dst-ip',pending:'dst-pe',complete:'dst-co'};
+const stLbl={in_progress:'In progress',pending:'Pending',complete:'Complete'};
+function renderDelivs(f){
+  const items=f==='all'?DELIVS:DELIVS.filter(d=>d.status===f);
+  document.getElementById('delivGrid').innerHTML=items.length?items.map(d=>`<div class="deliv-card" onclick="editDeliv('${d.id}')"><div class="deliv-ico" style="background:${d.ibg};"><i class="ti ${d.ico}" style="color:${d.ic};"></i></div><div class="deliv-body"><div class="deliv-name">${d.name}</div><div class="deliv-owner">${d.owner}</div><div class="deliv-footer"><span class="deliv-phase">${d.phase}</span><span class="deliv-st ${stCls[d.status]}">${stLbl[d.status]}</span></div></div></div>`).join(''):'<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--ink-400);">No deliverables matching this filter.</div>';
+}
+function filterDelivs(f,btn){currentFilter=f;document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderDelivs(f);}
+function editDeliv(id){
+  const d=DELIVS.find(x=>x.id===id);if(!d)return;
+  openModal('Update deliverable',`<div style="display:flex;flex-direction:column;gap:12px;"><div class="fg"><label class="form-label">Deliverable</label><input class="form-input" value="${d.name}" readonly></div><div class="fg"><label class="form-label">Owner</label><input class="form-input" value="${d.owner}" id="deOwner"></div><div class="fg"><label class="form-label">Status</label><select class="form-input" id="deStatus"><option value="pending"${d.status==='pending'?' selected':''}>Pending</option><option value="in_progress"${d.status==='in_progress'?' selected':''}>In progress</option><option value="complete"${d.status==='complete'?' selected':''}>Complete</option></select></div><div class="fg"><label class="form-label">Notes</label><textarea class="form-input" rows="3" placeholder="Add review notes..."></textarea></div></div>`,`<button class="btn btn-sec" onclick="closeModal()">Cancel</button><button class="btn btn-pri" onclick="saveDeliv('${id}')">Save changes</button>`);
+}
+function saveDeliv(id){
+  const d=DELIVS.find(x=>x.id===id);if(!d)return;
+  d.status=document.getElementById('deStatus')?.value||d.status;
+  d.owner=document.getElementById('deOwner')?.value||d.owner;
+  closeModal();renderDelivs(currentFilter);
+  toast('Deliverable updated','success');alog('DelivAgent','Updated: "'+d.name+'" → '+stLbl[d.status],'success');
+}
+
+// ── DSP ──
+function renderDSP(){
+  const sc={Approved:'bg-green','In review':'bg-amber','Pending board':'bg-purple'};
+  document.getElementById('dspContent').innerHTML=`<div class="sec-label" style="margin-top:0;">Active submissions</div>${DSP_DEALS.map(d=>`<div class="dsp-card"><div class="dsp-left"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><div class="dsp-deal-name">${d.name}</div><span class="badge ${sc[d.status]||'bg-gray'}">${d.status}</span><span class="badge bg-gray">${d.tier}</span></div><div class="dsp-meta">${d.client} · ${d.value} · ${d.id}</div>${d.reviewers.length?`<div class="reviewers">${d.reviewers.map(r=>`<div class="rev-chip"><div class="rev-av">${r.i}</div><span class="rev-name">${r.name}</span><span class="rev-role">${r.role}</span><span class="rev-st rst-${r.st}">${r.st.charAt(0).toUpperCase()+r.st.slice(1)}</span></div>`).join('')}</div>`:''}<div class="dsp-prog-track"><div class="dsp-prog-fill" style="width:${d.prog}%;"></div></div><div class="dsp-prog-lbl"><span>Progress</span><span>${d.prog}%</span></div></div><div class="dsp-actions"><button class="btn btn-sec btn-sm" onclick="viewDSPDeal('${d.id}')"><i class="ti ti-eye"></i> View</button><button class="btn btn-ghost btn-sm" onclick="toast('Escalation raised for ${d.id}','warning')"><i class="ti ti-alert-triangle"></i> Escalate</button></div></div>`).join('')}<div class="card" style="margin-top:1rem;"><div style="display:flex;align-items:center;gap:12px;"><i class="ti ti-info-circle" style="font-size:20px;color:var(--ac);"></i><div style="flex:1;"><div style="font-size:13.5px;font-weight:500;">Submit a new deal</div><div style="font-size:12.5px;color:var(--ink-400);margin-top:2px;">Complete deal governance first — the system auto-populates the DSP submission and routes to approvers.</div></div><button class="btn btn-pri btn-sm" onclick="nav('deal')"><i class="ti ti-arrow-right"></i> Deal governance</button></div></div>`;
+}
+function viewDSPDeal(id){
+  const d=DSP_DEALS.find(x=>x.id===id);if(!d)return;
+  openModal('DSP deal — '+d.id,`<div style="display:flex;flex-direction:column;gap:12px;"><div class="fg"><label class="form-label">Deal name</label><input class="form-input" value="${d.name}" readonly></div><div class="fg"><label class="form-label">Client</label><input class="form-input" value="${d.client}" readonly></div><div class="fg"><label class="form-label">Value / Tier</label><input class="form-input" value="${d.value} — ${d.tier}" readonly></div><div class="fg"><label class="form-label">Status / Progress</label><input class="form-input" value="${d.status} (${d.prog}%)" readonly></div></div>`,`<button class="btn btn-sec" onclick="closeModal()">Close</button><button class="btn btn-pri" onclick="toast('Opening DSP portal — SSO required','info')"><i class="ti ti-external-link"></i> Open in DSP</button>`);
+}
+
+// ── AGENTS ──
+function renderAgents(){
+  const el=document.getElementById('agentsGrid');
+  if(el&&el.children.length>0)return;
+  el.innerHTML=AGENTS.map(a=>`<div class="agent-card"><div class="agent-top"><div class="agent-hd"><div class="agent-av" style="background:${a.abg};"><i class="ti ${a.ico}" style="color:var(--ac);font-size:22px;"></i><span class="agent-sdot sd-ready" id="sd-${a.id}"></span></div><div><div class="agent-name">${a.name}</div><div class="agent-role">${a.role}</div></div></div><div class="agent-desc">${a.desc}</div><div class="agent-caps">${a.caps.map(c=>`<div class="agent-cap"><i class="ti ti-check"></i>${c}</div>`).join('')}</div></div><div class="agent-foot"><button class="agent-run" id="ab-${a.id}" onclick="runAgent('${a.id}')"><i class="ti ti-player-play"></i> Run agent</button><button class="agent-cfg" onclick="configAgent('${a.id}')" title="Configure"><i class="ti ti-settings"></i></button></div></div>`).join('');
+}
+
+const AGENT_STEPS={
+  ag_deal:[{m:'Reading deal parameters...',l:'info'},{m:'Classifying deal tier...',l:'info'},{m:'Identifying required approvers...',l:'info'},{m:'Building DSP submission payload...',l:'info'},{m:'Routing to DSP approval workflow...',l:'success'},{m:'Approvers notified via email simulation',l:'success'}],
+  ag_adm:[{m:'Loading deal parameters and scope...',l:'info'},{m:'Reading '+0+' role configurations...',l:'info'},{m:'Calculating base effort cost...',l:'info'},{m:'Applying contingency & overhead...',l:'info'},{m:'Estimate complete — generating export payload',l:'success'}],
+  ag_isp:[{m:'Pulling FTE requirements from ADM estimator...',l:'info'},{m:'Mapping '+ISP_PLAN.length+' roles to skill categories...',l:'info'},{m:'Calculating mobilisation timeline across 20 weeks...',l:'info'},{m:'Peak demand identified: Wk 5–10',l:'warning'},{m:'myISP request ready — '+ISP_PLAN.reduce((s,r)=>s+r.fte,0)+' FTEs',l:'success'}],
+  ag_dsp:[{m:'Connecting to DSP API endpoint...',l:'info'},{m:'Fetching active submission queue...',l:'info'},{m:'Checking approval status for 3 active deals...',l:'info'},{m:'DSP-2025-001: Solution Lead pending — reminder sent',l:'warning'},{m:'DSP-2025-003: Board review required — escalated',l:'warning'},{m:'DSP-2025-002: Fully approved — deal activated',l:'success'}],
+  ag_tl:[{m:'Reading deal scope and type...',l:'info'},{m:'Generating 20-week standard programme...',l:'info'},{m:'Phase 1–4 activities mapped — 16 total tasks',l:'info'},{m:'No critical path conflicts detected',l:'success'}],
+  ag_del:[{m:'Scanning '+DELIVS.length+' deliverables...',l:'info'},{m:'In progress: '+DELIVS.filter(d=>d.status==='in_progress').length+' | Pending: '+DELIVS.filter(d=>d.status==='pending').length,l:'info'},{m:'HLD review due — reminder sent to Solution Lead',l:'warning'},{m:'Deliverables health check complete',l:'success'}],
+};
+
+async function runAgent(id){
+  const btn=document.getElementById('ab-'+id),dot=document.getElementById('sd-'+id);
+  if(btn){btn.innerHTML='<i class="ti ti-loader-2" style="animation:spin 1s linear infinite;"></i> Running...';btn.classList.add('running');}
+  if(dot)dot.className='agent-sdot sd-run';
+  nav('agents');
+  const steps=AGENT_STEPS[id]||[{m:'Agent running...',l:'info'},{m:'Agent complete',l:'success'}];
+  const name=AGENTS.find(a=>a.id===id)?.name||id;
+  for(const s of steps){await delay(600);alog(name,s.m,s.l);}
+  if(btn){btn.innerHTML='<i class="ti ti-player-play"></i> Run agent';btn.classList.remove('running');}
+  if(dot)dot.className='agent-sdot sd-ready';
+  toast(name+' completed','success');
+}
+
+async function runAllAgents(){
+  toast('Running all 6 agents in sequence...','info');
+  nav('agents');
+  for(const a of AGENTS)await runAgent(a.id);
+  toast('All agents completed successfully','success');
+}
+
+function clearLog(){logLines=[];document.getElementById('agentLog').innerHTML='';toast('Log cleared','info');}
+
+function configAgent(id){
+  const name=AGENTS.find(a=>a.id===id)?.name||id;
+  openModal('Configure — '+name,`<div style="display:flex;flex-direction:column;gap:12px;"><div class="fg"><label class="form-label">Trigger mode</label><select class="form-input"><option>Manual</option><option>On deal submit</option><option>Scheduled daily</option></select></div><div class="fg"><label class="form-label">Notification channel</label><select class="form-input"><option>In-app only</option><option>Email</option><option>Email + In-app</option></select></div><div class="fg"><label class="form-label">Log level</label><select class="form-input"><option>Info</option><option>Debug</option><option>Errors only</option></select></div></div>`,`<button class="btn btn-sec" onclick="closeModal()">Cancel</button><button class="btn btn-pri" onclick="closeModal();toast('Config saved','success')">Save config</button>`);
+}
+
+// ── REPORT ──
+function renderReport(){
+  const sc={Approved:'bg-green','In review':'bg-amber','Pending board':'bg-purple'};
+  document.getElementById('rptDealBody').innerHTML=DSP_DEALS.map(d=>`<tr><td style="font-family:var(--fm);font-size:12px;">${d.id}</td><td style="font-weight:500;">${d.name}</td><td>${d.client}</td><td style="font-family:var(--fm);">${d.value}</td><td><span class="badge bg-gray">${d.tier}</span></td><td><span class="badge ${sc[d.status]||'bg-gray'}">${d.status}</span></td><td>${d.prog}%</td></tr>`).join('');
+
+  const t=calcEst();const fmt=n=>'$'+Math.round(n).toLocaleString();
+  document.getElementById('rptEstimate').innerHTML=`<table class="report-table"><thead><tr><th>Role</th><th>FTEs</th><th>Weeks</th><th>Rate/wk</th><th>Total</th></tr></thead><tbody>${roles.map(r=>`<tr><td>${r.role}</td><td>${r.fte}</td><td>${r.weeks}</td><td style="font-family:var(--fm);">$${r.rate.toLocaleString()}</td><td style="font-family:var(--fm);font-weight:500;">${fmt(r.fte*r.weeks*r.rate)}</td></tr>`).join('')}<tr style="background:rgba(161,0,255,.04);font-weight:600;"><td colspan="4">Grand total (incl. contingency & overhead)</td><td style="font-family:var(--fm);">${fmt(t.total)}</td></tr></tbody></table>`;
+
+  const priCls={Critical:'bg-red',High:'bg-amber',Medium:'bg-blue'};
+  document.getElementById('rptISPBody').innerHTML=ISP_PLAN.map(r=>`<tr><td style="font-weight:500;">${r.role}</td><td>${r.fte}</td><td>${r.skill}</td><td>Wk ${r.ws}</td><td>Wk ${r.we}</td><td><span class="badge ${priCls[r.pri]||'bg-gray'}">${r.pri}</span></td></tr>`).join('');
+
+  document.getElementById('rptDelivBody').innerHTML=DELIVS.map(d=>`<tr><td style="font-weight:500;">${d.name}</td><td>${d.owner}</td><td>${d.phase}</td><td><span class="deliv-st ${stCls[d.status]}">${stLbl[d.status]}</span></td></tr>`).join('');
+
+  document.getElementById('rptTimeBody').innerHTML=PHASES.map(p=>`<tr><td style="font-weight:500;">${p.name}</td><td style="font-family:var(--fm);">${p.wk}</td><td>${p.fte} FTE</td><td style="font-size:12px;color:var(--ink-500);">${p.acts.map(a=>a.name).join(' · ')}</td></tr>`).join('');
+}
+
+function exportReportCSV(){
+  const deals=DSP_DEALS.map(d=>[d.id,d.name,d.client,d.value,d.tier,d.status,d.prog+'%'].join(','));
+  const ests=roles.map(r=>[r.role,r.fte,r.weeks,r.rate,r.fte*r.weeks*r.rate].join(','));
+  const delivs=DELIVS.map(d=>[d.name,d.owner,d.phase,stLbl[d.status]].join(','));
+  const rows=['=== DEALS ===','Deal ID,Name,Client,Value,Tier,Status,Progress',...deals,'','=== ESTIMATES ===','Role,FTEs,Weeks,Rate,Total',...ests,'','=== DELIVERABLES ===','Deliverable,Owner,Phase,Status',...delivs];
+  dl(rows.join('\n'),'text/csv','sgh-full-report.csv');
+  toast('Full report exported as CSV','success');
+  alog('App','Full governance report exported','success');
+}
+
+function printReport(){
+  renderReport();
+  setTimeout(()=>window.print(),200);
+  toast('Print dialog opened — save as PDF','info');
+}
+
+// ── NOTIFICATIONS ──
+function toggleNotif(){document.getElementById('notifPanel').classList.toggle('open');}
+function clearNotif(){document.getElementById('notifList')&&(document.getElementById('notifList').innerHTML='');document.getElementById('notifPanel').classList.remove('open');document.getElementById('nbadge').style.display='none';toast('Notifications cleared','info');}
+
+// ── MODAL ──
+function openModal(title,body,foot=''){
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalBody').innerHTML=body;
+  document.getElementById('modalFoot').innerHTML=foot;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+
+// ── TOAST ──
+function toast(msg,type='info',dur=3500){
+  const icons={success:'ti-circle-check',error:'ti-alert-circle',warning:'ti-alert-triangle',info:'ti-info-circle'};
+  const el=document.createElement('div');el.className='toast '+type;
+  el.innerHTML=`<i class="ti ${icons[type]||icons.info}"></i><span>${msg}</span>`;
+  document.getElementById('toastWrap').appendChild(el);
+  setTimeout(()=>{el.style.transition='all .3s';el.style.opacity='0';el.style.transform='translateX(20px)';setTimeout(()=>el.remove(),350);},dur);
+}
+
+// ── AGENT LOG ──
+function alog(agent,msg,level='info'){
+  const t=new Date().toTimeString().slice(0,8);
+  logLines.push({t,agent,msg,level});
+  const el=document.getElementById('agentLog');
+  if(!el)return;
+  el.innerHTML=logLines.slice(-80).map(l=>`<div class="log-line ll-${l.level}"><span class="log-time">${l.t}</span><span class="log-agent">[${l.agent}]</span><span class="log-msg">${l.msg}</span></div>`).join('');
+  el.scrollTop=el.scrollHeight;
+}
+
+// ── UTILS ──
+function dl(content,type,name){const b=new Blob([content],{type});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);}
+function delay(ms){return new Promise(r=>setTimeout(r,ms));}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded',()=>{
+  initHome();
+  renderTierCards(null);
+  document.getElementById('ispDate')&&(document.getElementById('ispDate').value=new Date().toISOString().slice(0,10));
+  setTimeout(()=>{document.getElementById('cdot').className='cdot warn';document.getElementById('ctext').textContent='Sandbox mode active';},1200);
+  alog('App','Solution Governance Hub v2.0 initialised','success');
+  alog('App','DSP, myISP, ADM running in sandbox mode','warning');
+  alog('App','All 6 AI agents ready and standing by','info');
+  document.addEventListener('click',e=>{const p=document.getElementById('notifPanel');if(p&&!p.contains(e.target)&&!e.target.closest('.icon-btn'))p.classList.remove('open');});
+});
+</script>
 </body>
 </html>
