@@ -1,0 +1,449 @@
+
+<h2 class="sr-only">Accenture Solution Dashboard — Deal Governance, Approval Workflows, and Landing Zone Delivery Framework</h2>
+
+<style>
+:root {
+  --purple-50:#EEEDFE;--purple-100:#CECBF6;--purple-200:#AFA9EC;--purple-400:#7F77DD;--purple-600:#534AB7;--purple-800:#3C3489;--purple-900:#26215C;
+  --teal-50:#E1F5EE;--teal-100:#9FE1CB;--teal-200:#5DCAA5;--teal-400:#1D9E75;--teal-600:#0F6E56;--teal-800:#085041;
+  --amber-50:#FAEEDA;--amber-100:#FAC775;--amber-200:#EF9F27;--amber-400:#BA7517;--amber-600:#854F0B;
+  --coral-50:#FAECE7;--coral-100:#F5C4B3;--coral-200:#F0997B;--coral-400:#D85A30;--coral-600:#993C1D;--coral-800:#712B13;
+  --blue-50:#E6F1FB;--blue-100:#B5D4F4;--blue-400:#378ADD;--blue-600:#185FA5;--blue-800:#0C447C;
+  --green-50:#EAF3DE;--green-100:#C0DD97;--green-400:#639922;--green-600:#3B6D11;
+  --gray-50:#F1EFE8;--gray-100:#D3D1C7;--gray-200:#B4B2A9;--gray-400:#888780;--gray-600:#5F5E5A;--gray-800:#444441;
+  --red-50:#FCEBEB;--red-200:#F09595;--red-400:#E24B4A;--red-600:#A32D2D;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-sans,system-ui,sans-serif);color:var(--color-text-primary);}
+.dash{padding:1.5rem 0;}
+
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:0 0 1.25rem;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.5rem;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-mark{width:36px;height:36px;background:var(--purple-600);border-radius:var(--border-radius-md,8px);display:flex;align-items:center;justify-content:center;}
+.logo-mark span{color:#fff;font-size:13px;font-weight:500;letter-spacing:-0.5px;}
+.logo-text{font-size:15px;font-weight:500;color:var(--color-text-primary);}
+.logo-sub{font-size:12px;color:var(--color-text-secondary);}
+.badge-live{background:var(--green-50);color:var(--green-600);font-size:11px;padding:3px 10px;border-radius:20px;border:0.5px solid var(--green-400);}
+
+.section-title{font-size:13px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.75rem;}
+
+.nav-tabs{display:flex;gap:4px;margin-bottom:1.5rem;background:var(--color-background-secondary);border-radius:var(--border-radius-md,8px);padding:4px;}
+.tab-btn{flex:1;padding:8px 12px;border:none;background:none;border-radius:6px;font-size:13px;cursor:pointer;color:var(--color-text-secondary);font-family:inherit;transition:all 0.15s;}
+.tab-btn.active{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500;border:0.5px solid var(--color-border-tertiary);}
+.tab-btn:hover:not(.active){color:var(--color-text-primary);}
+
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* Deal governance */
+.deal-tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:1.5rem;}
+.tier-card{border-radius:var(--border-radius-lg,12px);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);padding:1.25rem;position:relative;overflow:hidden;}
+.tier-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+.tier-card.t1::before{background:var(--green-400);}
+.tier-card.t2::before{background:var(--amber-200);}
+.tier-card.t3::before{background:var(--purple-600);}
+.tier-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px;}
+.tier-range{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:12px;}
+.tier-range small{font-size:13px;font-weight:400;color:var(--color-text-secondary);}
+.approval-list{display:flex;flex-direction:column;gap:6px;}
+.appr-item{display:flex;align-items:center;gap:8px;font-size:12px;}
+.appr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.appr-dot.yes{background:var(--green-400);}
+.appr-dot.no{background:var(--gray-200);}
+.appr-dot.req{background:var(--purple-600);}
+.appr-name{color:var(--color-text-primary);}
+.appr-status{margin-left:auto;font-size:11px;padding:2px 8px;border-radius:20px;}
+.appr-status.required{background:var(--purple-50);color:var(--purple-800);}
+.appr-status.not-req{background:var(--gray-50);color:var(--gray-600);}
+.appr-status.mandatory{background:var(--coral-50);color:var(--coral-800);}
+.dsp-badge{margin-top:12px;padding:8px 10px;background:var(--blue-50);border-radius:var(--border-radius-md,8px);font-size:12px;color:var(--blue-800);display:flex;align-items:center;gap:6px;border:0.5px solid var(--blue-100);}
+
+/* Requirements mapping */
+.req-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:1.5rem;}
+.req-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg,12px);padding:1rem 1.25rem;}
+.req-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.req-icon{width:32px;height:32px;border-radius:var(--border-radius-md,8px);display:flex;align-items:center;justify-content:center;}
+.req-title{font-size:13px;font-weight:500;}
+.req-teams{display:flex;flex-direction:column;gap:5px;}
+.team-tag{font-size:12px;color:var(--color-text-secondary);display:flex;align-items:center;gap:6px;}
+.team-tag::before{content:'';display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--purple-400);flex-shrink:0;}
+
+/* Timeline */
+.phase-block{margin-bottom:1rem;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg,12px);background:var(--color-background-primary);overflow:hidden;}
+.phase-header{padding:0.875rem 1.25rem;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.phase-header:hover{background:var(--color-background-secondary);}
+.phase-icon{width:28px;height:28px;border-radius:var(--border-radius-md,8px);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.phase-name{font-size:14px;font-weight:500;}
+.phase-weeks{margin-left:auto;font-size:12px;color:var(--color-text-secondary);}
+.phase-toggle{color:var(--color-text-secondary);transition:transform 0.2s;}
+.phase-toggle.open{transform:rotate(180deg);}
+.phase-body{display:none;border-top:0.5px solid var(--color-border-tertiary);}
+.phase-body.open{display:block;}
+.activity-row{display:flex;align-items:center;gap:10px;padding:10px 1.25rem;border-bottom:0.5px solid var(--color-border-tertiary);}
+.activity-row:last-child{border-bottom:none;}
+.act-num{width:20px;height:20px;border-radius:50%;background:var(--color-background-secondary);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;color:var(--color-text-secondary);flex-shrink:0;}
+.act-name{font-size:13px;flex:1;}
+.act-fte{font-size:11px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:2px 8px;border-radius:20px;}
+.act-duration{font-size:11px;color:var(--color-text-secondary);min-width:52px;text-align:right;}
+
+/* Deliverables */
+.deliv-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.deliv-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg,12px);padding:1rem 1.25rem;display:flex;align-items:center;gap:12px;}
+.deliv-icon{width:36px;height:36px;border-radius:var(--border-radius-md,8px);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.deliv-info{flex:1;}
+.deliv-name{font-size:13px;font-weight:500;margin-bottom:2px;}
+.deliv-owner{font-size:12px;color:var(--color-text-secondary);}
+.deliv-status{font-size:11px;padding:2px 10px;border-radius:20px;}
+
+/* FTE summary */
+.fte-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.5rem;}
+.fte-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md,8px);padding:0.875rem 1rem;}
+.fte-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;}
+.fte-num{font-size:22px;font-weight:500;}
+.fte-unit{font-size:12px;color:var(--color-text-secondary);}
+
+/* Gantt */
+.gantt-wrap{overflow-x:auto;}
+.gantt-table{width:100%;border-collapse:collapse;font-size:12px;}
+.gantt-table th{font-weight:500;color:var(--color-text-secondary);padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary);text-align:left;font-size:11px;}
+.gantt-table td{padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:middle;}
+.gantt-row:hover td{background:var(--color-background-secondary);}
+.gantt-bar-cell{min-width:280px;}
+.gantt-bar-bg{height:20px;background:var(--color-background-secondary);border-radius:4px;position:relative;overflow:hidden;}
+.gantt-bar-fill{height:100%;border-radius:4px;position:absolute;left:0;top:0;}
+</style>
+
+<div class="dash">
+  <div class="top-bar">
+    <div class="logo">
+      <div class="logo-mark"><span>Ac</span></div>
+      <div>
+        <div class="logo-text">Accenture Solution Governance</div>
+        <div class="logo-sub">Deal Management & Landing Zone Delivery Framework</div>
+      </div>
+    </div>
+    <span class="badge-live"><i class="ti ti-circle-check" aria-hidden="true"></i> Active</span>
+  </div>
+
+  <div class="nav-tabs" role="tablist">
+    <button class="tab-btn active" onclick="switchTab('deal')" role="tab">Deal Governance</button>
+    <button class="tab-btn" onclick="switchTab('req')" role="tab">Requirements Mapping</button>
+    <button class="tab-btn" onclick="switchTab('timeline')" role="tab">Timeline & FTEs</button>
+    <button class="tab-btn" onclick="switchTab('deliverables')" role="tab">Deliverables</button>
+  </div>
+
+  <!-- DEAL GOVERNANCE -->
+  <div class="panel active" id="panel-deal">
+    <div class="section-title">Deal size tiers & approval workflow</div>
+    <div class="deal-tiers">
+      <div class="tier-card t1">
+        <div class="tier-label">Tier 1 — Small Deal</div>
+        <div class="tier-range">&lt; $5M <small>USD</small></div>
+        <div class="approval-list">
+          <div class="appr-item"><span class="appr-dot no"></span><span class="appr-name">DCSO / QA</span><span class="appr-status not-req">Not required</span></div>
+          <div class="appr-item"><span class="appr-dot no"></span><span class="appr-name">Solution Lead</span><span class="appr-status not-req">Not required</span></div>
+          <div class="appr-item"><span class="appr-dot yes"></span><span class="appr-name">DSP Routing</span><span class="appr-status required">Required</span></div>
+        </div>
+        <div class="dsp-badge"><i class="ti ti-route" aria-hidden="true"></i> Processed via DSP only — expedited path</div>
+      </div>
+      <div class="tier-card t2">
+        <div class="tier-label">Tier 2 — Mid Deal</div>
+        <div class="tier-range">$5M – $10M <small>USD</small></div>
+        <div class="approval-list">
+          <div class="appr-item"><span class="appr-dot req"></span><span class="appr-name">DCSO / QA</span><span class="appr-status required">Required</span></div>
+          <div class="appr-item"><span class="appr-dot req"></span><span class="appr-name">Solution Lead</span><span class="appr-status required">Required</span></div>
+          <div class="appr-item"><span class="appr-dot yes"></span><span class="appr-name">DSP Routing</span><span class="appr-status required">Required</span></div>
+        </div>
+        <div class="dsp-badge"><i class="ti ti-route" aria-hidden="true"></i> DCSO + Solution Lead sign-off via DSP</div>
+      </div>
+      <div class="tier-card t3">
+        <div class="tier-label">Tier 3 — Large Deal</div>
+        <div class="tier-range">&gt; $10M <small>USD</small></div>
+        <div class="approval-list">
+          <div class="appr-item"><span class="appr-dot req"></span><span class="appr-name">DCSO / QA</span><span class="appr-status mandatory">Mandatory</span></div>
+          <div class="appr-item"><span class="appr-dot req"></span><span class="appr-name">Solution Lead</span><span class="appr-status mandatory">Mandatory</span></div>
+          <div class="appr-item"><span class="appr-dot req"></span><span class="appr-name">All Governance</span><span class="appr-status mandatory">Mandatory</span></div>
+          <div class="appr-item"><span class="appr-dot yes"></span><span class="appr-name">DSP Routing</span><span class="appr-status mandatory">Mandatory</span></div>
+        </div>
+        <div class="dsp-badge"><i class="ti ti-route" aria-hidden="true"></i> Full governance board review via DSP</div>
+      </div>
+    </div>
+
+    <div class="section-title">DSP approval flow</div>
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg,12px);padding:1.25rem;">
+      <div style="display:flex;align-items:center;gap:0;overflow-x:auto;padding-bottom:4px;">
+        <div style="text-align:center;min-width:90px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--purple-50);border:1.5px solid var(--purple-400);display:flex;align-items:center;justify-content:center;margin:0 auto 6px;"><i class="ti ti-file-description" style="color:var(--purple-600);font-size:18px;" aria-hidden="true"></i></div>
+          <div style="font-size:11px;font-weight:500;">Deal intake</div>
+          <div style="font-size:10px;color:var(--color-text-secondary);">Submission</div>
+        </div>
+        <div style="flex:1;height:1.5px;background:var(--color-border-tertiary);min-width:24px;"></div>
+        <div style="text-align:center;min-width:90px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--amber-50);border:1.5px solid var(--amber-200);display:flex;align-items:center;justify-content:center;margin:0 auto 6px;"><i class="ti ti-filter" style="color:var(--amber-400);font-size:18px;" aria-hidden="true"></i></div>
+          <div style="font-size:11px;font-weight:500;">Tier assessment</div>
+          <div style="font-size:10px;color:var(--color-text-secondary);">Deal size check</div>
+        </div>
+        <div style="flex:1;height:1.5px;background:var(--color-border-tertiary);min-width:24px;"></div>
+        <div style="text-align:center;min-width:90px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--blue-50);border:1.5px solid var(--blue-400);display:flex;align-items:center;justify-content:center;margin:0 auto 6px;"><i class="ti ti-users" style="color:var(--blue-600);font-size:18px;" aria-hidden="true"></i></div>
+          <div style="font-size:11px;font-weight:500;">Approval routing</div>
+          <div style="font-size:10px;color:var(--color-text-secondary);">DCSO / QA / SL</div>
+        </div>
+        <div style="flex:1;height:1.5px;background:var(--color-border-tertiary);min-width:24px;"></div>
+        <div style="text-align:center;min-width:90px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--teal-50);border:1.5px solid var(--teal-200);display:flex;align-items:center;justify-content:center;margin:0 auto 6px;"><i class="ti ti-circle-check" style="color:var(--teal-400);font-size:18px;" aria-hidden="true"></i></div>
+          <div style="font-size:11px;font-weight:500;">Sign-off</div>
+          <div style="font-size:10px;color:var(--color-text-secondary);">DSP confirmation</div>
+        </div>
+        <div style="flex:1;height:1.5px;background:var(--color-border-tertiary);min-width:24px;"></div>
+        <div style="text-align:center;min-width:90px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--green-50);border:1.5px solid var(--green-400);display:flex;align-items:center;justify-content:center;margin:0 auto 6px;"><i class="ti ti-rocket" style="color:var(--green-600);font-size:18px;" aria-hidden="true"></i></div>
+          <div style="font-size:11px;font-weight:500;">Deal activation</div>
+          <div style="font-size:10px;color:var(--color-text-secondary);">Mobilisation begins</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REQUIREMENTS MAPPING -->
+  <div class="panel" id="panel-req">
+    <div class="section-title">Requirement-to-team mapping</div>
+    <div class="req-grid">
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-icon" style="background:var(--purple-50);"><i class="ti ti-shield-lock" style="color:var(--purple-600);font-size:17px;" aria-hidden="true"></i></div>
+          <div class="req-title">Security & compliance</div>
+        </div>
+        <div class="req-teams">
+          <div class="team-tag">DCSO — Security architecture review</div>
+          <div class="team-tag">QA — Compliance validation</div>
+          <div class="team-tag">Cloud Security SME — Landing zone guardrails</div>
+          <div class="team-tag">IAM Lead — Identity & access controls</div>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-icon" style="background:var(--blue-50);"><i class="ti ti-topology-star" style="color:var(--blue-600);font-size:17px;" aria-hidden="true"></i></div>
+          <div class="req-title">Infrastructure & platform</div>
+        </div>
+        <div class="req-teams">
+          <div class="team-tag">Cloud Platform Engineer — Landing zone build</div>
+          <div class="team-tag">Network Architect — Connectivity design</div>
+          <div class="team-tag">DevOps Lead — Pipeline & IaC setup</div>
+          <div class="team-tag">SRE — Monitoring & observability</div>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-icon" style="background:var(--teal-50);"><i class="ti ti-code" style="color:var(--teal-600);font-size:17px;" aria-hidden="true"></i></div>
+          <div class="req-title">Application & deployment</div>
+        </div>
+        <div class="req-teams">
+          <div class="team-tag">Application Architect — Solution design</div>
+          <div class="team-tag">Dev Lead — Application deployment</div>
+          <div class="team-tag">QA Engineer — E2E & performance testing</div>
+          <div class="team-tag">Release Manager — Deployment coordination</div>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-icon" style="background:var(--amber-50);"><i class="ti ti-file-analytics" style="color:var(--amber-400);font-size:17px;" aria-hidden="true"></i></div>
+          <div class="req-title">Governance & documentation</div>
+        </div>
+        <div class="req-teams">
+          <div class="team-tag">Solution Lead — HLD / LLD sign-off</div>
+          <div class="team-tag">Technical Writer — Ops & design docs</div>
+          <div class="team-tag">Transition Manager — Transition documents</div>
+          <div class="team-tag">Delivery Manager — Go-live sign-off</div>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-icon" style="background:var(--coral-50);"><i class="ti ti-users-group" style="color:var(--coral-600);font-size:17px;" aria-hidden="true"></i></div>
+          <div class="req-title">Resource & mobilisation</div>
+        </div>
+        <div class="req-teams">
+          <div class="team-tag">Resource Manager — FTE allocation</div>
+          <div class="team-tag">Talent Acquisition — Specialist onboarding</div>
+          <div class="team-tag">Programme Manager — Mobilisation plan</div>
+          <div class="team-tag">Workforce Planning — Capacity modelling</div>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-icon" style="background:var(--green-50);"><i class="ti ti-headset" style="color:var(--green-600);font-size:17px;" aria-hidden="true"></i></div>
+          <div class="req-title">Hypercare & operations</div>
+        </div>
+        <div class="req-teams">
+          <div class="team-tag">Operations Lead — Hypercare support</div>
+          <div class="team-tag">Service Manager — Incident management</div>
+          <div class="team-tag">Client Lead — Stakeholder engagement</div>
+          <div class="team-tag">ITSM Team — Run-state handover</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE & FTEs -->
+  <div class="panel" id="panel-timeline">
+    <div class="section-title">FTE summary</div>
+    <div class="fte-grid">
+      <div class="fte-card">
+        <div class="fte-label">Total FTEs</div>
+        <div class="fte-num">24 <span class="fte-unit">FTE</span></div>
+      </div>
+      <div class="fte-card">
+        <div class="fte-label">Programme duration</div>
+        <div class="fte-num">20 <span class="fte-unit">weeks</span></div>
+      </div>
+      <div class="fte-card">
+        <div class="fte-label">Peak mobilisation</div>
+        <div class="fte-num">Wk 3–6</div>
+      </div>
+      <div class="fte-card">
+        <div class="fte-label">Environment strategy</div>
+        <div class="fte-num" style="font-size:15px;">Dev · UAT · Prod</div>
+      </div>
+    </div>
+
+    <div class="section-title">Activities by phase</div>
+
+    <div class="phase-block">
+      <div class="phase-header" onclick="togglePhase('p1')">
+        <div class="phase-icon" style="background:var(--purple-50);"><i class="ti ti-flag" style="color:var(--purple-600);font-size:15px;" aria-hidden="true"></i></div>
+        <div>
+          <div class="phase-name">Phase 1 — Mobilisation & setup</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);">Resource onboarding, environment setup, baseline</div>
+        </div>
+        <span class="phase-weeks">Wk 1–4</span>
+        <i class="ti ti-chevron-down phase-toggle" id="toggle-p1" aria-hidden="true"></i>
+      </div>
+      <div class="phase-body" id="body-p1">
+        <div class="activity-row"><span class="act-num">1</span><span class="act-name">Resource mobilisation & onboarding</span><span class="act-fte">6 FTE</span><span class="act-duration">Wk 1–2</span></div>
+        <div class="activity-row"><span class="act-num">2</span><span class="act-name">Environment strategy definition (Dev / UAT / Prod)</span><span class="act-fte">3 FTE</span><span class="act-duration">Wk 1–3</span></div>
+        <div class="activity-row"><span class="act-num">3</span><span class="act-name">Landing zone provisioning (secured, standard)</span><span class="act-fte">5 FTE</span><span class="act-duration">Wk 2–4</span></div>
+        <div class="activity-row"><span class="act-num">4</span><span class="act-name">IAM, network, security baseline configuration</span><span class="act-fte">4 FTE</span><span class="act-duration">Wk 3–4</span></div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-header" onclick="togglePhase('p2')">
+        <div class="phase-icon" style="background:var(--blue-50);"><i class="ti ti-rocket" style="color:var(--blue-600);font-size:15px;" aria-hidden="true"></i></div>
+        <div>
+          <div class="phase-name">Phase 2 — Deployment</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);">Application deployment, pipeline, IaC</div>
+        </div>
+        <span class="phase-weeks">Wk 5–10</span>
+        <i class="ti ti-chevron-down phase-toggle" id="toggle-p2" aria-hidden="true"></i>
+      </div>
+      <div class="phase-body" id="body-p2">
+        <div class="activity-row"><span class="act-num">5</span><span class="act-name">CI/CD pipeline build & IaC automation</span><span class="act-fte">4 FTE</span><span class="act-duration">Wk 5–7</span></div>
+        <div class="activity-row"><span class="act-num">6</span><span class="act-name">Application deployment to Dev environment</span><span class="act-fte">5 FTE</span><span class="act-duration">Wk 6–8</span></div>
+        <div class="activity-row"><span class="act-num">7</span><span class="act-name">Application deployment to UAT environment</span><span class="act-fte">5 FTE</span><span class="act-duration">Wk 8–10</span></div>
+        <div class="activity-row"><span class="act-num">8</span><span class="act-name">Monitoring & observability configuration</span><span class="act-fte">3 FTE</span><span class="act-duration">Wk 7–10</span></div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-header" onclick="togglePhase('p3')">
+        <div class="phase-icon" style="background:var(--amber-50);"><i class="ti ti-test-pipe" style="color:var(--amber-400);font-size:15px;" aria-hidden="true"></i></div>
+        <div>
+          <div class="phase-name">Phase 3 — Testing</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);">E2E, performance, UAT sign-off</div>
+        </div>
+        <span class="phase-weeks">Wk 11–15</span>
+        <i class="ti ti-chevron-down phase-toggle" id="toggle-p3" aria-hidden="true"></i>
+      </div>
+      <div class="phase-body" id="body-p3">
+        <div class="activity-row"><span class="act-num">9</span><span class="act-name">End-to-end integration testing</span><span class="act-fte">4 FTE</span><span class="act-duration">Wk 11–13</span></div>
+        <div class="activity-row"><span class="act-num">10</span><span class="act-name">Performance & load testing</span><span class="act-fte">3 FTE</span><span class="act-duration">Wk 12–14</span></div>
+        <div class="activity-row"><span class="act-num">11</span><span class="act-name">Security & penetration testing</span><span class="act-fte">2 FTE</span><span class="act-duration">Wk 13–15</span></div>
+        <div class="activity-row"><span class="act-num">12</span><span class="act-name">UAT execution & defect resolution</span><span class="act-fte">4 FTE</span><span class="act-duration">Wk 13–15</span></div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-header" onclick="togglePhase('p4')">
+        <div class="phase-icon" style="background:var(--teal-50);"><i class="ti ti-check" style="color:var(--teal-600);font-size:15px;" aria-hidden="true"></i></div>
+        <div>
+          <div class="phase-name">Phase 4 — Go-live & hypercare</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);">Production deployment, support, sign-off</div>
+        </div>
+        <span class="phase-weeks">Wk 16–20</span>
+        <i class="ti ti-chevron-down phase-toggle" id="toggle-p4" aria-hidden="true"></i>
+      </div>
+      <div class="phase-body" id="body-p4">
+        <div class="activity-row"><span class="act-num">13</span><span class="act-name">Production deployment & cutover</span><span class="act-fte">6 FTE</span><span class="act-duration">Wk 16–17</span></div>
+        <div class="activity-row"><span class="act-num">14</span><span class="act-name">Hypercare support (24x7 war room)</span><span class="act-fte">5 FTE</span><span class="act-duration">Wk 17–19</span></div>
+        <div class="activity-row"><span class="act-num">15</span><span class="act-name">Operations handover to run-state team</span><span class="act-fte">3 FTE</span><span class="act-duration">Wk 19–20</span></div>
+        <div class="activity-row"><span class="act-num">16</span><span class="act-name">Go-live review & client sign-off</span><span class="act-fte">2 FTE</span><span class="act-duration">Wk 20</span></div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:1.25rem;">Indicative gantt overview</div>
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg,12px);padding:1rem 1.25rem;">
+      <div class="gantt-wrap">
+        <table class="gantt-table">
+          <thead><tr>
+            <th style="min-width:160px;">Phase</th>
+            <th style="min-width:60px;">FTEs</th>
+            <th class="gantt-bar-cell">Timeline (20 weeks)</th>
+          </tr></thead>
+          <tbody id="gantt-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELIVERABLES -->
+  <div class="panel" id="panel-deliverables">
+    <div class="section-title">Key deliverables</div>
+    <div class="deliv-grid" id="deliv-grid"></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    const ids=['deal','req','timeline','deliverables'];
+    b.classList.toggle('active',ids[i]===id);
+  });
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+}
+
+function togglePhase(id){
+  const body=document.getElementById('body-'+id);
+  const tog=document.getElementById('toggle-'+id);
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  tog.classList.toggle('open',!isOpen);
+}
+
+const ganttData=[
+  {phase:'Mobilisation & setup',ftes:6,start:0,end:4,color:'#7F77DD'},
+  {phase:'Deployment',ftes:5,start:4,end:10,color:'#378ADD'},
+  {phase:'Testing',ftes:4,start:10,end:15,color:'#EF9F27'},
+  {phase:'Go-live & hypercare',ftes:6,start:15,end:20,color:'#1D9E75'},
+];
+const gb=document.getElementById('gantt-body');
+ganttData.forEach(d=>{
+  const w=Math.round((d.end-d.start)/20*100);
+  const l=Math.round(d.start/20*100);
+  gb.innerHTML+=`<tr class="gantt-row"><td style="font-size:13px;">${d.phase}</td><td style="font-size:13px;">${d.ftes} FTE</td><td class="gantt-bar-cell"><div class="gantt-bar-bg"><div class="gantt-bar-fill" style="left:${l}%;width:${w}%;background:${d.color};"></div></div></td></tr>`;
+});
+
+const deliverables=[
+  {name:'High-level design (HLD)',owner:'Solution Lead + Architect',phase:'Phase 1',icon:'ti-layout-2',bg:'var(--purple-50)',ic:'var(--purple-600)',status:'In progress',sc:'background:var(--amber-50);color:var(--amber-600)'},
+  {name:'Low-level design (LLD)',owner:'Platform + App Architect',phase:'Phase 2',icon:'ti-sitemap',bg:'var(--blue-50)',ic:'var(--blue-600)',status:'Pending',sc:'background:var(--gray-50);color:var(--gray-600)'},
+  {name:'Operations document',owner:'Operations Lead',phase:'Phase 4',icon:'ti-settings',bg:'var(--teal-50)',ic:'var(--teal-600)',status:'Pending',sc:'background:var(--gray-50);color:var(--gray-600)'},
+  {name:'Design document',owner:'Solution Architect',phase:'Phase 2',icon:'ti-pencil-code',bg:'var(--amber-50)',ic:'var(--amber-400)',status:'In progress',sc:'background:var(--amber-50);color:var(--amber-600)'},
+  {name:'Transition document',owner:'Transition Manager',phase:'Phase 4',icon:'ti-transfer',bg:'var(--coral-50)',ic:'var(--coral-600)',status:'Pending',sc:'background:var(--gray-50);color:var(--gray-600)'},
+  {name:'Hypercare support plan',owner:'Operations + Service Lead',phase:'Phase 4',icon:'ti-headset',bg:'var(--green-50)',ic:'var(--green-600)',status:'Pending',sc:'background:var(--gray-50);color:var(--gray-600)'},
+  {name:'Go-live sign-off report',owner:'Delivery Manager + Client',phase:'Phase 4',icon:'ti-circle-check',bg:'var(--teal-50)',ic:'var(--teal-600)',status:'Pending',sc:'background:var(--gray-50);color:var(--gray-600)'},
+  {name:'Test evidence pack',owner:'QA Engineer + Release Mgr',phase:'Phase 3',icon:'ti-clipboard-check',bg:'var(--purple-50)',ic:'var(--purple-600)',status:'In progress',sc:'background:var(--amber-50);color:var(--amber-600)'},
+];
+const dg=document.getElementById('deliv-grid');
+deliverables.forEach(d=>{
+  dg.innerHTML+=`<div class="deliv-card"><div class="deliv-icon" style="background:${d.bg};"><i class="ti ${d.icon}" style="color:${d.ic};font-size:18px;" aria-hidden="true"></i></div><div class="deliv-info"><div class="deliv-name">${d.name}</div><div class="deliv-owner">${d.owner} · ${d.phase}</div></div><span class="deliv-status" style="${d.sc};">${d.status}</span></div>`;
+});
+</script>
