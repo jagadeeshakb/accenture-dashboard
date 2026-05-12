@@ -1,0 +1,195 @@
+/* data/data.js — all static application data */
+
+const DATA = {
+
+  phases: [
+    {
+      id: 'p1', num: 1,
+      name: 'Phase 1 — Mobilisation & setup',
+      sub: 'Resource onboarding, landing zone provisioning, baseline security',
+      weeks: 'Wk 1–4', ftes: 6,
+      iconClass: 'ti-flag', iconBg: 'rgba(161,0,255,0.1)', iconColor: '#A100FF',
+      ganttStart: 0, ganttEnd: 20, ganttColor: '#7F77DD',
+      activities: [
+        { num:1, name:'Resource mobilisation & onboarding', fte:'6 FTE', dur:'Wk 1–2' },
+        { num:2, name:'Environment strategy definition (Dev / UAT / Prod)', fte:'3 FTE', dur:'Wk 1–3' },
+        { num:3, name:'Landing zone provisioning (secured, standard approach)', fte:'5 FTE', dur:'Wk 2–4' },
+        { num:4, name:'IAM, network & security baseline configuration', fte:'4 FTE', dur:'Wk 3–4' },
+      ],
+    },
+    {
+      id: 'p2', num: 2,
+      name: 'Phase 2 — Deployment',
+      sub: 'CI/CD pipeline, IaC automation, application deployment to Dev & UAT',
+      weeks: 'Wk 5–10', ftes: 5,
+      iconClass: 'ti-rocket', iconBg: '#E6F1FB', iconColor: '#185FA5',
+      ganttStart: 20, ganttEnd: 50, ganttColor: '#378ADD',
+      activities: [
+        { num:5, name:'CI/CD pipeline build & IaC automation', fte:'4 FTE', dur:'Wk 5–7' },
+        { num:6, name:'Application deployment to Dev environment', fte:'5 FTE', dur:'Wk 6–8' },
+        { num:7, name:'Application deployment to UAT environment', fte:'5 FTE', dur:'Wk 8–10' },
+        { num:8, name:'Monitoring & observability configuration', fte:'3 FTE', dur:'Wk 7–10' },
+      ],
+    },
+    {
+      id: 'p3', num: 3,
+      name: 'Phase 3 — Testing',
+      sub: 'E2E integration, performance, security penetration & UAT sign-off',
+      weeks: 'Wk 11–15', ftes: 4,
+      iconClass: 'ti-test-pipe', iconBg: '#FAEEDA', iconColor: '#BA7517',
+      ganttStart: 50, ganttEnd: 75, ganttColor: '#EF9F27',
+      activities: [
+        { num:9,  name:'End-to-end integration testing', fte:'4 FTE', dur:'Wk 11–13' },
+        { num:10, name:'Performance & load testing', fte:'3 FTE', dur:'Wk 12–14' },
+        { num:11, name:'Security & penetration testing', fte:'2 FTE', dur:'Wk 13–15' },
+        { num:12, name:'UAT execution & defect resolution', fte:'4 FTE', dur:'Wk 13–15' },
+      ],
+    },
+    {
+      id: 'p4', num: 4,
+      name: 'Phase 4 — Go-live & hypercare',
+      sub: 'Production deployment, 24×7 war room support, client sign-off',
+      weeks: 'Wk 16–20', ftes: 6,
+      iconClass: 'ti-circle-check', iconBg: '#E1F5EE', iconColor: '#0F6E56',
+      ganttStart: 75, ganttEnd: 100, ganttColor: '#1D9E75',
+      activities: [
+        { num:13, name:'Production deployment & cutover', fte:'6 FTE', dur:'Wk 16–17' },
+        { num:14, name:'Hypercare support (24×7 war room)', fte:'5 FTE', dur:'Wk 17–19' },
+        { num:15, name:'Operations handover to run-state team', fte:'3 FTE', dur:'Wk 19–20' },
+        { num:16, name:'Go-live review & client sign-off', fte:'2 FTE', dur:'Wk 20' },
+      ],
+    },
+  ],
+
+  deliverables: [
+    { id:'hld', name:'High-level design (HLD)', owner:'Solution Lead + Architect', phase:'Phase 1–2', icon:'ti-layout-2', iconBg:'rgba(161,0,255,0.1)', iconColor:'#A100FF', status:'in_progress', statusLabel:'In progress' },
+    { id:'lld', name:'Low-level design (LLD)', owner:'Platform + App Architect', phase:'Phase 2', icon:'ti-sitemap', iconBg:'#E6F1FB', iconColor:'#185FA5', status:'pending', statusLabel:'Pending' },
+    { id:'ops', name:'Operations document', owner:'Operations Lead', phase:'Phase 4', icon:'ti-settings', iconBg:'#E1F5EE', iconColor:'#0F6E56', status:'pending', statusLabel:'Pending' },
+    { id:'des', name:'Design document', owner:'Solution Architect', phase:'Phase 2', icon:'ti-pencil-code', iconBg:'#FAEEDA', iconColor:'#BA7517', status:'in_progress', statusLabel:'In progress' },
+    { id:'trn', name:'Transition document', owner:'Transition Manager', phase:'Phase 4', icon:'ti-transfer', iconBg:'#FAECE7', iconColor:'#993C1D', status:'pending', statusLabel:'Pending' },
+    { id:'hyp', name:'Hypercare support plan', owner:'Operations + Service Lead', phase:'Phase 4', icon:'ti-headset', iconBg:'#EAF3DE', iconColor:'#3B6D11', status:'pending', statusLabel:'Pending' },
+    { id:'gol', name:'Go-live sign-off report', owner:'Delivery Manager + Client', phase:'Phase 4', icon:'ti-circle-check', iconBg:'#E1F5EE', iconColor:'#0F6E56', status:'pending', statusLabel:'Pending' },
+    { id:'tst', name:'Test evidence pack', owner:'QA Engineer + Release Manager', phase:'Phase 3', icon:'ti-clipboard-check', iconBg:'rgba(161,0,255,0.08)', iconColor:'#A100FF', status:'in_progress', statusLabel:'In progress' },
+  ],
+
+  requirements: [
+    { title:'Security & compliance', icon:'ti-shield-lock', bg:'rgba(161,0,255,0.08)', ic:'#A100FF',
+      teams:['DCSO — Security architecture review','QA — Compliance validation','Cloud Security SME — Landing zone guardrails','IAM Lead — Identity & access controls'] },
+    { title:'Infrastructure & platform', icon:'ti-topology-star', bg:'#E6F1FB', ic:'#185FA5',
+      teams:['Cloud Platform Engineer — Landing zone build','Network Architect — Connectivity design','DevOps Lead — Pipeline & IaC setup','SRE — Monitoring & observability'] },
+    { title:'Application & deployment', icon:'ti-code', bg:'#E1F5EE', ic:'#0F6E56',
+      teams:['Application Architect — Solution design','Dev Lead — Application deployment','QA Engineer — E2E & performance testing','Release Manager — Deployment coordination'] },
+    { title:'Governance & documentation', icon:'ti-file-analytics', bg:'#FAEEDA', ic:'#BA7517',
+      teams:['Solution Lead — HLD / LLD sign-off','Technical Writer — Ops & design docs','Transition Manager — Transition documents','Delivery Manager — Go-live sign-off'] },
+    { title:'Resource & mobilisation', icon:'ti-users-group', bg:'#FAECE7', ic:'#993C1D',
+      teams:['Resource Manager — FTE allocation','Talent Acquisition — Specialist onboarding','Programme Manager — Mobilisation plan','Workforce Planning — Capacity modelling'] },
+    { title:'Hypercare & operations', icon:'ti-headset', bg:'#EAF3DE', ic:'#3B6D11',
+      teams:['Operations Lead — Hypercare support','Service Manager — Incident management','Client Lead — Stakeholder engagement','ITSM Team — Run-state handover'] },
+  ],
+
+  defaultRoles: [
+    { id:'r1', role:'Cloud Platform Engineer', fte:2, weeks:16, rate:1800 },
+    { id:'r2', role:'Application Architect',   fte:1, weeks:12, rate:2200 },
+    { id:'r3', role:'DevOps Lead',             fte:1, weeks:14, rate:2000 },
+    { id:'r4', role:'QA Engineer',             fte:2, weeks:8,  rate:1500 },
+    { id:'r5', role:'Security SME',            fte:1, weeks:6,  rate:2400 },
+    { id:'r6', role:'Project Manager',         fte:1, weeks:20, rate:2100 },
+  ],
+
+  agentDefs: [
+    {
+      id: 'deal_agent',
+      name: 'Deal governance agent',
+      role: 'Deal classification & routing',
+      desc: 'Evaluates deal parameters, classifies into tiers, identifies required approvers and routes submissions to DSP automatically.',
+      icon: 'ti-shield-check',
+      avatarBg: 'rgba(161,0,255,0.12)',
+      caps: ['Deal tier classification (T1/T2/T3)', 'DSP approval routing', 'Deal pack generation', 'Approval chain notification'],
+      trigger: () => DealAgent.runAgent(),
+    },
+    {
+      id: 'adm_agent',
+      name: 'ADM estimator agent',
+      role: 'Effort & cost estimation',
+      desc: 'Runs ADM-aligned estimation across phases and roles, calculates FTE demand, generates exportable input files for ADM tool.',
+      icon: 'ti-calculator',
+      avatarBg: '#E6F1FB',
+      caps: ['Role × week × rate calculation', 'Phase effort distribution', 'ADM CSV/JSON export', 'DSP cost push'],
+      trigger: () => ADMAgent.runAgent(),
+    },
+    {
+      id: 'isp_agent',
+      name: 'myISP resource agent',
+      role: 'Resource mobilisation',
+      desc: 'Generates structured resource requests from deal and estimator data, produces myISP-ready FTE demand plans and mobilisation schedules.',
+      icon: 'ti-users',
+      avatarBg: '#E1F5EE',
+      caps: ['FTE demand planning', 'myISP request generation', 'Mobilisation timeline', 'Skill gap identification'],
+      trigger: () => ISPAgent.runAgent(),
+    },
+    {
+      id: 'dsp_agent',
+      name: 'DSP integration agent',
+      role: 'Deal submission & tracking',
+      desc: 'Manages end-to-end DSP submission lifecycle — pre-fills forms, tracks approval status and sends escalation alerts.',
+      icon: 'ti-route',
+      avatarBg: 'rgba(161,0,255,0.1)',
+      caps: ['DSP form pre-population', 'Approval status tracking', 'Escalation alerts', 'Deal archive management'],
+      trigger: () => DSPAgent.runAgent(),
+    },
+    {
+      id: 'timeline_agent',
+      name: 'Timeline & delivery agent',
+      role: 'Programme planning',
+      desc: 'Generates delivery timelines from deal scope, adjusts phase durations, exports Gantt charts and flags schedule risks.',
+      icon: 'ti-calendar-stats',
+      avatarBg: '#FAEEDA',
+      caps: ['Phase timeline generation', 'Gantt chart export', 'Risk flag identification', 'Milestone tracking'],
+      trigger: () => TimelineAgent.runAgent(),
+    },
+    {
+      id: 'deliv_agent',
+      name: 'Deliverables agent',
+      role: 'Artefact tracking & review',
+      desc: 'Tracks all formal deliverables, sends review reminders, validates completeness against gate criteria and manages sign-off workflow.',
+      icon: 'ti-clipboard-check',
+      avatarBg: '#EAF3DE',
+      caps: ['Artefact status tracking', 'Gate review validation', 'Sign-off workflow', 'Completeness checks'],
+      trigger: () => DeliverablesAgent.runAgent(),
+    },
+  ],
+
+  notifications: [
+    { icon:'ti-route', iconBg:'rgba(161,0,255,0.1)', iconColor:'#A100FF', title:'DSP submission ready', sub:'Deal pack generated — awaiting submission', time:'2 min ago' },
+    { icon:'ti-users', iconBg:'#E1F5EE', iconColor:'#0F6E56', title:'myISP request pending', sub:'6 FTE resource request needs review', time:'15 min ago' },
+    { icon:'ti-alert-triangle', iconBg:'#FAEEDA', iconColor:'#BA7517', title:'Approval required', sub:'DCSO review overdue by 2 days', time:'1 hr ago' },
+  ],
+
+  dspDeals: [
+    { id:'DSP-2025-001', name:'Cloud Migration — APAC Banking', client:'ANZ Bank', value:'$8.2M', tier:'T2', status:'In review', progress:65, approvers:[
+      { initials:'SK', name:'Sarah Kim', role:'DCSO', status:'approved' },
+      { initials:'MT', name:'Mark Thompson', role:'Solution Lead', status:'pending' },
+      { initials:'AL', name:'Alex Lee', role:'QA', status:'required' },
+    ]},
+    { id:'DSP-2025-002', name:'Landing Zone — Gov Cloud', client:'Dept. of Finance', value:'$3.1M', tier:'T1', status:'Approved', progress:100, approvers:[] },
+    { id:'DSP-2025-003', name:'Digital Transformation', client:'Telstra', value:'$14.5M', tier:'T3', status:'Pending board', progress:30, approvers:[
+      { initials:'RJ', name:'Rachel Jones', role:'DCSO', status:'required' },
+      { initials:'BW', name:'Ben Wilson', role:'Solution Lead', status:'required' },
+      { initials:'CH', name:'Carol Hayes', role:'QA', status:'required' },
+    ]},
+  ],
+
+  integrations: [
+    { name:'DSP', fullName:'Deal Structuring Platform', icon:'ti-route', iconBg:'rgba(161,0,255,0.1)', iconColor:'#A100FF', status:'mock', label:'Sandbox mode' },
+    { name:'myISP', fullName:'Internal Staffing Portal', icon:'ti-users', iconBg:'#E1F5EE', iconColor:'#0F6E56', status:'mock', label:'Sandbox mode' },
+    { name:'ADM', fullName:'ADM Estimator Tool', icon:'ti-calculator', iconBg:'#E6F1FB', iconColor:'#185FA5', status:'mock', label:'Sandbox mode' },
+  ],
+
+  roleViews: {
+    deal_owner:       { label:'Deal Owner',        stats:['active_deals','pending_approvals','total_value','deals_won'] },
+    solution_lead:    { label:'Solution Lead',     stats:['active_deals','hld_reviews','deliverables_due','team_ftes'] },
+    resource_manager: { label:'Resource Manager',  stats:['open_requests','ftes_deployed','mobilisation_due','skill_gaps'] },
+    dcso:             { label:'DCSO / QA',         stats:['pending_approvals','security_reviews','risk_flags','deals_reviewed'] },
+    delivery_manager: { label:'Delivery Manager',  stats:['active_projects','milestones_due','deliverables_complete','days_to_golive'] },
+  },
+};
