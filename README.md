@@ -1,4 +1,4 @@
-# Accenture Solution Governance Dashboard
+# SA Governance Dashboard
 
 A clean, interactive dashboard for Accenture deal governance, requirements mapping, delivery timelines, and key deliverables tracking.
 
